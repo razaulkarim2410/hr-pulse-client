@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router';
+import { Link, NavLink } from 'react-router';
 import logo from '../../assets/hrpulse-high-resolution-logo-transparent.png'
 
 const Navbar = () => {
@@ -7,6 +7,7 @@ const Navbar = () => {
     <li><NavLink to={'/'}>Home</NavLink></li>
     <li><NavLink to={'/contact'}>Contact us</NavLink></li>
     <li><NavLink to={'/dashboard'}>Dashboard</NavLink></li>
+    
 
 
 
@@ -38,7 +39,7 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">LogIn</a>
+          <Link to='/login' className="btn">Login</Link>
         </div>
       </div>
     </div>
