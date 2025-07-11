@@ -1,74 +1,98 @@
-import React, { use } from 'react';
-import { useState } from 'react';
+import React, { use, useState } from 'react';
 import { FaEye } from 'react-icons/fa';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../../contexts/AuthContext/AuthContext';
+import Swal from 'sweetalert2';
+import { db } from '../../firebase/firebase.config';
+import { doc, setDoc } from 'firebase/firestore';
+
+
 
 const Register = () => {
-  const {createUser } = use(AuthContext)
-
+  const { createUser, updateUser, setUser } = use(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
-  const handleRegister = e => {
-
+  const handleRegister = async (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
-
-    const photo = form.photo.value;
     const email = form.email.value;
     const password = form.password.value;
-    console.log({ name, photo, email, password })
+    const role = form.role.value;
+    const imageFile = form.photo.files[0];
+
+    // Password validation
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*]).{6,}$/;
+    if (!passwordRegex.test(password)) {
+      Swal.fire("Error", "Password must be ≥6 characters, 1 capital letter, 1 special char", "error");
+      return;
+    }
+
+    // Upload photo to imgbb
+    const formData = new FormData();
+    formData.append('image', imageFile);
+    const res = await fetch(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_upload_key}`, {
+      method: "POST",
+      body: formData
+    });
+    const imgData = await res.json();
+    const photoURL = imgData.data.url;
 
     createUser(email, password)
-      .then((result) => {
-       
-        console.log(result.user)
-        
-          })
-          .catch((error) => {
-            console.log(error)
-            
-          })
-  }
+      .then(result => {
+        updateUser({ displayName: name, photoURL }).then(() => {
+          const user = result.user;
+          setUser({ ...user, displayName: name, photoURL });
+
+          // Save to Firestore
+          setDoc(doc(db, "users", user.uid), {
+            name, email, role, photoURL,
+            bank_account_no: "1234567890",
+            salary: 25000,
+            designation: "Sales Assistant"
+          });
+
+          Swal.fire("Success!", "Account Created", "success");
+          navigate("/");
+        });
+      })
+      .catch(err => Swal.fire("Error", err.message, "error"));
+  };
+
   return (
-    <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl my-30 flex items-center justify-center mx-auto">
-      <h2 className='text-4xl font-bold text-center py-4'>Register Your Account</h2>
+    <div className="card bg-base-100 w-full max-w-sm shadow-2xl mx-auto mt-28">
+      <h2 className="text-4xl font-bold text-center py-4">Register Your Account</h2>
       <form onSubmit={handleRegister} className="card-body">
-        
-        <fieldset className="fieldset">
+        <label className="label">Name</label>
+        <input type="text" required name="name" className="input input-bordered" />
 
-          <label className="label">Name</label>
-          <input type="text" required name='name' className="input" placeholder="Name" />
+        <label className="label">Photo</label>
+        <input type="file" name="photo" accept="image/*" required className="file-input file-input-bordered" />
 
-          <label className="label">Photo URL</label>
-          <input type="text" required name='photo' className="input" placeholder="Photo URL" />
+        <label className="label">Email</label>
+        <input type="email" required name="email" className="input input-bordered" />
 
-          <label className="label">Email</label>
-          <input type="email" required name='email' className="input" placeholder="Email" />
+        <label className="label">Password</label>
+        <div className="relative">
+          <input
+            type={showPassword ? "text" : "password"}
+            required
+            name="password"
+            className="input input-bordered w-full"
+          />
+          <FaEye className="absolute top-3 right-3 cursor-pointer" onClick={() => setShowPassword(!showPassword)} />
+        </div>
 
-          <label className="label text-xs font-bold">Password</label>
-          <div className='relative'>
-            <input
-              name='password'
+        <label className="label">Select Role</label>
+        <select name="role" required className="select select-bordered">
+          <option value="">-- Select Role --</option>
+          <option value="Employee">Employee</option>
+          <option value="HR">HR</option>
+        </select>
 
-              type={showPassword ? 'text' : 'password'}
-              className="input"
-              placeholder="Password"
-              required
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className='absolute  top-2 right-6'
-            >
-              <FaEye size={20} />
-            </button>
-          </div>
-
-          <button type='submit' className="btn btn-neutral mt-4">Register</button>
-          <p className='text-l font-bold pt-5'>Already Have an Account ?{" "} <Link className='underline font-bold text-pink-700 ' to='/login'>Login</Link></p>
-        </fieldset>
+        <button type="submit" className="btn btn-neutral mt-4">Register</button>
+        <p className="text-sm pt-4">Already have an account? <Link to="/login" className="text-pink-700 underline">Login</Link></p>
       </form>
     </div>
   );
