@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { use,  useState } from 'react';
 import { FaEye } from 'react-icons/fa';
 import { Link } from 'react-router';
+import { AuthContext } from '../../contexts/AuthContext/AuthContext';
 
 const Login = () => {
-
+  const {loginUser } = use(AuthContext)
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = (e) => {
@@ -12,6 +13,17 @@ const Login = () => {
     const email = form.email.value
     const password = form.password.value
     console.log({ email, password })
+
+    loginUser(email, password)
+      .then(result => {
+       
+        console.log(result.user)
+        
+          })
+          .catch(error => {
+            console.log(error)
+            
+          })
   }
 
   return (
@@ -43,8 +55,8 @@ const Login = () => {
             </button>
           </div>
 
-          <button type='submit' className="btn btn-neutral mt-4">LogIn</button>
-          <p className='text-l font-bold pt-5'>Don't Have an Account ? {" "} <Link className='underline  text-pink-700' to={'/register'}>Register</Link></p>
+          <button type='submit' className="btn btn-neutral mt-4">Login</button>
+          <p className='text-l font-bold pt-5'>Don't Have an Account ? {" "} <Link className='underline  text-pink-700' to='/register'>Register</Link></p>
         </fieldset>
       </form>
     </div>

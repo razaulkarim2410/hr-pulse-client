@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { use } from 'react';
 import { useState } from 'react';
 import { FaEye } from 'react-icons/fa';
 import { Link } from 'react-router';
+import { AuthContext } from '../../contexts/AuthContext/AuthContext';
 
 const Register = () => {
+  const {createUser } = use(AuthContext)
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -17,6 +19,17 @@ const Register = () => {
     const email = form.email.value;
     const password = form.password.value;
     console.log({ name, photo, email, password })
+
+    createUser(email, password)
+      .then((result) => {
+       
+        console.log(result.user)
+        
+          })
+          .catch((error) => {
+            console.log(error)
+            
+          })
   }
   return (
     <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl my-30 flex items-center justify-center mx-auto">
@@ -54,7 +67,7 @@ const Register = () => {
           </div>
 
           <button type='submit' className="btn btn-neutral mt-4">Register</button>
-          <p className='text-l font-bold pt-5'>Already Have an Account ?{" "} <Link className='underline font-bold text-pink-700 ' to={'/login'}>Login</Link></p>
+          <p className='text-l font-bold pt-5'>Already Have an Account ?{" "} <Link className='underline font-bold text-pink-700 ' to='/login'>Login</Link></p>
         </fieldset>
       </form>
     </div>

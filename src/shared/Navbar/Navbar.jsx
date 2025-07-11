@@ -1,13 +1,26 @@
-import React from 'react';
+import React, { use } from 'react';
 import { Link, NavLink } from 'react-router';
 import logo from '../../assets/hrpulse-high-resolution-logo-transparent.png'
+import { AuthContext } from '../../contexts/AuthContext/AuthContext';
 
 const Navbar = () => {
+
+  const { user, logoutUser } = use(AuthContext);
+  const handleLogout = () => {
+    logoutUser()
+      .then(() => {
+        console.log('logout user')
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
   const links = <>
-    <li><NavLink to={'/'}>Home</NavLink></li>
-    <li><NavLink to={'/contact'}>Contact us</NavLink></li>
-    <li><NavLink to={'/dashboard'}>Dashboard</NavLink></li>
-    
+    <li><NavLink to='/'>Home</NavLink></li>
+    <li><NavLink to='/contact'>Contact us</NavLink></li>
+    <li><NavLink to='/dashboard'>Dashboard</NavLink></li>
+
 
 
 
@@ -39,11 +52,14 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          <Link to='/login' className="btn">Login</Link>
+          {
+            user ? (<button onClick={handleLogout} className="btn  bg-pink-700 text-white hover:bg-white hover:text-pink-700">Logout</button>) : (<Link to='/login' className="btn  bg-pink-700 text-white hover:bg-white hover:text-pink-700">Login</Link>)
+
+          }
         </div>
       </div>
     </div>
-  );
+  );    
 };
 
 export default Navbar;
