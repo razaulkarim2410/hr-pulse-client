@@ -1,18 +1,14 @@
-import React, { use, useRef, useState } from 'react';
-import { FaEye } from 'react-icons/fa';
-import { Link, useLocation, useNavigate } from 'react-router';
-import { AuthContext } from '../../contexts/AuthContext/AuthContext';
-import { FcGoogle } from 'react-icons/fc';
-import Swal from 'sweetalert2';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth } from '../../firebase/firebase.config';
-import { db } from '../../firebase/firebase.config';
-import { doc, setDoc } from 'firebase/firestore';
+import React, { useState, useContext } from "react";
+import { FaEye } from "react-icons/fa";
+import { Link, useLocation, useNavigate } from "react-router";
+import { AuthContext } from "../../contexts/AuthContext/AuthContext";
+import Swal from "sweetalert2";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "../../firebase/firebase.config";
 
 const Login = () => {
-  const { loginUser, setUser } = use(AuthContext);
+  const { loginUser, setUser } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
-  const emailRef = useRef();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -22,38 +18,45 @@ const Login = () => {
     const password = e.target.password.value;
 
     loginUser(email, password)
-      .then(result => {
+      .then((result) => {
         setUser(result.user);
-        navigate(location.state || "/");
         Swal.fire("Welcome!", "Login successful", "success");
+        navigate(location.state || "/");
       })
-      .catch(error => {
+      .catch((error) => {
         Swal.fire("Error", "Invalid email or password", "error");
       });
   };
 
-  const handleGoogleSignIn = () => {
+  const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then(result => {
-        const user = result.user;
-        setUser(user);
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      setUser(user);
 
-        // Save to Firestore if new
-        setDoc(doc(db, "users", user.uid), {
+      // Save user to MongoDB
+      await fetch("http://localhost:5000/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          uid: user.uid,
           name: user.displayName,
           email: user.email,
           photoURL: user.photoURL,
           role: "Employee",
-          designation: "Digital Marketer",
+          bank_account_no: "000000001",
           salary: 25000,
-          bank_account_no: "000000001"
-        });
+          designation: "Digital Marketer"
+        }),
+      });
 
-        navigate(location.state || "/");
-        Swal.fire("Success!", "Google Login successful", "success");
-      })
-      .catch(err => Swal.fire("Error", err.message, "error"));
+      Swal.fire("Success!", "Google login successful", "success");
+      navigate(location.state || "/");
+    } catch (err) {
+      console.error("Google Sign-In error:", err.message);
+      Swal.fire("Error", err.message, "error");
+    }
   };
 
   return (
@@ -65,16 +68,25 @@ const Login = () => {
 
         <label className="label">Password</label>
         <div className="relative">
-          <input type={showPassword ? "text" : "password"} name="password" required className="input input-bordered" />
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            required
+            className="input input-bordered"
+          />
           <FaEye className="absolute top-3 right-3 cursor-pointer" onClick={() => setShowPassword(!showPassword)} />
         </div>
 
         <button type="submit" className="btn btn-neutral mt-4">Login</button>
+
         <button type="button" onClick={handleGoogleSignIn} className="btn mt-4 text-lg font-bold flex items-center gap-2">
-          <FcGoogle /> Sign in with Google
+          <img src="https://img.icons8.com/color/16/google-logo.png" alt="Google" /> Sign in with Google
         </button>
 
-        <p className="text-sm pt-5">Don't have an account? <Link to="/register" className="text-pink-700 underline">Register</Link></p>
+        <p className="text-sm pt-5">
+          Don't have an account?{" "}
+          <Link to="/register" className="text-pink-700 underline">Register</Link>
+        </p>
       </form>
     </div>
   );

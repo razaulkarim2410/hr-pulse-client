@@ -1,15 +1,11 @@
-import React, { use, useState } from 'react';
+import React, { useState } from 'react';
 import { FaEye } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../../contexts/AuthContext/AuthContext';
 import Swal from 'sweetalert2';
-import { db } from '../../firebase/firebase.config';
-import { doc, setDoc } from 'firebase/firestore';
-
-
 
 const Register = () => {
-  const { createUser, updateUser, setUser } = use(AuthContext);
+  const { createUser, updateUser, setUser } = React.useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
@@ -22,42 +18,54 @@ const Register = () => {
     const role = form.role.value;
     const imageFile = form.photo.files[0];
 
-    // Password validation
+    // ✅ Password validation
     const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*]).{6,}$/;
     if (!passwordRegex.test(password)) {
       Swal.fire("Error", "Password must be ≥6 characters, 1 capital letter, 1 special char", "error");
       return;
     }
 
-    // Upload photo to imgbb
-    const formData = new FormData();
-    formData.append('image', imageFile);
-    const res = await fetch(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_upload_key}`, {
-      method: "POST",
-      body: formData
-    });
-    const imgData = await res.json();
-    const photoURL = imgData.data.url;
+    try {
+      // ✅ Upload photo to imgbb
+      const formData = new FormData();
+      formData.append('image', imageFile);
 
-    createUser(email, password)
-      .then(result => {
-        updateUser({ displayName: name, photoURL }).then(() => {
-          const user = result.user;
-          setUser({ ...user, displayName: name, photoURL });
+      const res = await fetch(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_upload_key}`, {
+        method: "POST",
+        body: formData
+      });
 
-          // Save to Firestore
-          setDoc(doc(db, "users", user.uid), {
-            name, email, role, photoURL,
-            bank_account_no: "1234567890",
-            salary: 25000,
-            designation: "Sales Assistant"
-          });
+      const imgData = await res.json();
+      const photoURL = imgData.data.url;
 
-          Swal.fire("Success!", "Account Created", "success");
-          navigate("/");
-        });
-      })
-      .catch(err => Swal.fire("Error", err.message, "error"));
+      // ✅ Create Firebase user
+      const result = await createUser(email, password);
+      await updateUser({ displayName: name, photoURL });
+
+      const user = result.user;
+      setUser({ ...user, displayName: name, photoURL });
+
+      // ✅ Save to MongoDB (backend)
+      await fetch('http://localhost:5000/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          uid: user.uid,
+          name,
+          email,
+          photoURL,
+          role,
+          bank_account_no: "1234567890",
+          salary: 25000,
+          designation: "Sales Assistant"
+        })
+      });
+
+      Swal.fire("Success!", "Account Created", "success");
+      navigate("/");
+    } catch (err) {
+      Swal.fire("Error", err.message, "error");
+    }
   };
 
   return (

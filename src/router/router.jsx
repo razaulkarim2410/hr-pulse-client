@@ -14,6 +14,10 @@ export const router = createBrowserRouter([
        Component: Home
       },
       {
+        path:'/dashboard/work-sheet' ,
+        
+      },
+      {
         path:'/login',
         Component: Login
       },
