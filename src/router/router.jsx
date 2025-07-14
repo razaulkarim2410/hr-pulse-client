@@ -5,6 +5,7 @@ import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import WorkSheet from "../Pages/Dashboard/WorkSheet";
 import PaymentHistory from "../Pages/Dashboard/PaymentHistory";
+import EmployeeList from "../Pages/Dashboard/EmployeeList";
 
 
 export const router = createBrowserRouter([
@@ -23,6 +24,10 @@ export const router = createBrowserRouter([
       {
         path: '/dashboard/payment-history',
         Component: PaymentHistory
+      },
+      {
+        path: '/dashboard/employee-list',
+        Component: EmployeeList
       },
       {
         path: '/login',
