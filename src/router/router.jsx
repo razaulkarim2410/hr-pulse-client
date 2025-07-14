@@ -6,6 +6,12 @@ import Register from "../Pages/Register/Register";
 import WorkSheet from "../Pages/Dashboard/WorkSheet";
 import PaymentHistory from "../Pages/Dashboard/PaymentHistory";
 import EmployeeList from "../Pages/Dashboard/EmployeeList";
+import PrivateRoute from "../components/routes/PrivateRoute";
+import DashboardLayouts from "../Layouts/DashboardLayouts";
+import EmployeeRoute from "../components/routes/EmployeeRoute";
+import HRRoute from "../components/routes/HRRoute";
+import DashboardHome from "../Pages/Dashboard/DashboardHome";
+import EmployeeDetails from "../Pages/Dashboard/EmployeeDetails";
 
 
 export const router = createBrowserRouter([
@@ -18,25 +24,69 @@ export const router = createBrowserRouter([
         Component: Home
       },
       {
-        path: '/dashboard/work-sheet',
-        Component: WorkSheet
-      },
-      {
-        path: '/dashboard/payment-history',
-        Component: PaymentHistory
-      },
-      {
-        path: '/dashboard/employee-list',
-        Component: EmployeeList
-      },
-      {
         path: '/login',
         Component: Login
       },
       {
         path: '/register',
         Component: Register
-      }
+      },
+      // {
+      //   path: '/dashboard/work-sheet',
+      //   Component: WorkSheet
+      // },
+      // {
+      //   path: '/dashboard/payment-history',
+      //   Component: PaymentHistory
+      // },
+      // {
+      //   path: '/dashboard/employee-list',
+      //   Component: EmployeeList
+      // },
+
     ]
   },
+  {
+    path: "/dashboard",
+    element: <PrivateRoute><DashboardLayouts /></PrivateRoute>,
+    children: [
+      {
+        index: true, // ✅ Default landing page
+        element: <DashboardHome />
+      },
+      // ✅ Employee-only
+      {
+        path: "work-sheet",
+        element: <EmployeeRoute><WorkSheet /></EmployeeRoute>
+      },
+      {
+        path: "payment-history",
+        element: <EmployeeRoute><PaymentHistory /></EmployeeRoute>
+      },
+
+      // ✅ HR-only
+      {
+        path: "employee-list",
+        element: <HRRoute><EmployeeList /></HRRoute>
+      },
+      {
+        path: "employee-salary-history/:slug",
+        element: <HRRoute><EmployeeDetails /></HRRoute>
+      },
+      // {
+      //   path: "progress",
+      //   element: <HRRoute><Progress /></HRRoute>
+      // },
+
+      // // ✅ Admin-only
+      // {
+      //   path: "all-employee-list",
+      //   element: <AdminRoute><AllEmployeeList /></AdminRoute>
+      // },
+      // {
+      //   path: "payroll",
+      //   element: <AdminRoute><Payroll /></AdminRoute>
+      // },
+    ]
+  }
 ]);

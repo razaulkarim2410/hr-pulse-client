@@ -97,9 +97,8 @@ const EmployeeList = () => {
                 <td className="p-2">৳{emp.salary}</td>
                 <td className="p-2">
                   <button
-                    className={`btn btn-xs ${
-                      emp.isVerified ? "btn-primary" : "btn-disabled"
-                    }`}
+                    className={`btn btn-xs ${emp.isVerified ? "btn-primary" : "btn-disabled"
+                      }`}
                     disabled={!emp.isVerified}
                     onClick={() => setSelectedEmployee(emp)}
                   >
@@ -107,8 +106,14 @@ const EmployeeList = () => {
                   </button>
                 </td>
                 <td className="p-2">
-                  {emp.designation || "—"}
+                  <a
+                    href={`/dashboard/employee-salary-history/${emp.email}`}
+                    className="text-blue-600 underline text-sm"
+                  >
+                    View Details
+                  </a>
                 </td>
+
               </tr>
             ))}
           </tbody>
