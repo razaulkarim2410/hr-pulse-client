@@ -4,23 +4,28 @@ import Home from "../Pages/Home/Home/Home";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import WorkSheet from "../Pages/Dashboard/WorkSheet";
+import PaymentHistory from "../Pages/Dashboard/PaymentHistory";
 
 
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: RootLayouts,
-    children:[
+    children: [
       {
         index: true,
-       Component: Home
+        Component: Home
       },
       {
-        path:'/dashboard/work-sheet' ,
+        path: '/dashboard/work-sheet',
         Component: WorkSheet
       },
       {
-        path:'/login',
+        path: '/dashboard/payment-history',
+        Component: PaymentHistory
+      },
+      {
+        path: '/login',
         Component: Login
       },
       {
