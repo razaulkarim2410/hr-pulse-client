@@ -17,8 +17,8 @@ const DashboardLayouts = () => {
 
   const navItemClass = ({ isActive }) =>
     isActive
-      ? 'bg-pink-700 text-white px-4 py-2 rounded'
-      : 'px-4 py-2 hover:bg-gray-100';
+      ? 'bg-pink-700 text-white px-2 py-1 rounded'
+      : 'px-2 py-1 ';
 
   // ✅ Prevent layout render until userInfo is ready
   if (!userInfo) {
@@ -40,29 +40,33 @@ const DashboardLayouts = () => {
 
         <nav className="space-y-2">
           <NavLink to="/" className={navItemClass}>Home</NavLink>
-
+          
           {userInfo.role === 'Employee' && (
             <>
               <NavLink to="/dashboard/work-sheet" className={navItemClass}>Work Sheet</NavLink>
+              <br />
               <NavLink to="/dashboard/payment-history" className={navItemClass}>Payment History</NavLink>
             </>
           )}
-
+          <br />
           {userInfo.role === 'HR' && (
             <>
               <NavLink to="/dashboard/employee-list" className={navItemClass}>Employee List</NavLink>
+              <br />
               <NavLink to={`/dashboard/employee-salary-history/${userInfo?.email}`} className={navItemClass}>
                 Employee Details
               </NavLink>
-
+              <br />
               <NavLink to="/dashboard/progress" className={navItemClass}>Progress</NavLink>
             </>
           )}
-
+          <br />
           {userInfo.role === 'Admin' && (
             <>
               <NavLink to="/dashboard/all-employee-list" className={navItemClass}>All Employees</NavLink>
+              <br />
               <NavLink to="/dashboard/payroll" className={navItemClass}>Payroll</NavLink>
+              <br />
               <NavLink to="/dashboard/messages" className={navItemClass}>Messages</NavLink>
             </>
           )}

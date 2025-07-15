@@ -100,31 +100,31 @@ const Navbar = () => {
       {/* Mobile Dropdown Menu */}
       {menuOpen && (
         <div className="lg:hidden bg-gray-100 shadow-md py-3 px-4 space-y-2">
-          <NavLink to="/" onClick={toggleMenu} className="block text-sm font-medium">Home</NavLink>
-          <NavLink to="/contact" onClick={toggleMenu} className="block text-sm font-medium">Contact</NavLink>
+          <NavLink to="/" onClick={toggleMenu} className="block text-sm font-medium hover:text-pink-600">Home</NavLink>
+          <NavLink to="/contact" onClick={toggleMenu} className="block text-sm font-medium hover:text-pink-600">Contact</NavLink>
 
           {user && role === 'Employee' && (
             <>
-              <NavLink to="/dashboard/work-sheet" onClick={toggleMenu} className="block text-sm font-medium">Work Sheet</NavLink>
-              <NavLink to="/dashboard/payment-history" onClick={toggleMenu} className="block text-sm font-medium">Payment History</NavLink>
+              <NavLink to="/dashboard/work-sheet" onClick={toggleMenu} className="block text-sm font-medium hover:text-pink-600">Work Sheet</NavLink>
+              <NavLink to="/dashboard/payment-history" onClick={toggleMenu} className="block text-sm font-medium hover:text-pink-600">Payment History</NavLink>
             </>
           )}
 
           {user && role === 'HR' && (
             <>
-              <NavLink to="/dashboard/employee-list" onClick={toggleMenu} className="block text-sm font-medium">Employee List</NavLink>
+              <NavLink to="/dashboard/employee-list" onClick={toggleMenu} className="block text-sm font-medium hover:text-pink-600">Employee List</NavLink>
               <NavLink to={`/dashboard/employee-salary-history/${userInfo?.email}`} className="text-sm font-semibold hover:text-pink-600">
                 Employee Details
               </NavLink>
 
-              <NavLink to="/dashboard/progress" onClick={toggleMenu} className="block text-sm font-medium">Progress</NavLink>
+              <NavLink to="/dashboard/progress" onClick={toggleMenu} className="block text-sm font-medium hover:text-pink-600">Progress</NavLink>
             </>
           )}
 
           {user && role === 'Admin' && (
             <>
-              <NavLink to="/dashboard/all-employee-list" onClick={toggleMenu} className="block text-sm font-medium">All Employees</NavLink>
-              <NavLink to="/dashboard/payroll" onClick={toggleMenu} className="block text-sm font-medium">Payroll</NavLink>
+              <NavLink to="/dashboard/all-employee-list" onClick={toggleMenu} className="block text-sm font-medium hover:text-pink-600">All Employees</NavLink>
+              <NavLink to="/dashboard/payroll" onClick={toggleMenu} className="block text-sm font-medium hover:text-pink-600">Payroll</NavLink>
             </>
           )}
 

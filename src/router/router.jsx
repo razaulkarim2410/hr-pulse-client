@@ -12,6 +12,7 @@ import EmployeeRoute from "../components/routes/EmployeeRoute";
 import HRRoute from "../components/routes/HRRoute";
 import DashboardHome from "../Pages/Dashboard/DashboardHome";
 import EmployeeDetails from "../Pages/Dashboard/EmployeeDetails";
+import ProgressPage from "../Pages/Dashboard/ProgressPage";
 
 
 export const router = createBrowserRouter([
@@ -73,10 +74,10 @@ export const router = createBrowserRouter([
         path: "employee-salary-history/:slug",
         element: <HRRoute><EmployeeDetails /></HRRoute>
       },
-      // {
-      //   path: "progress",
-      //   element: <HRRoute><Progress /></HRRoute>
-      // },
+      {
+        path: "progress",
+        element: <HRRoute><ProgressPage /></HRRoute>
+      },
 
       // // ✅ Admin-only
       // {

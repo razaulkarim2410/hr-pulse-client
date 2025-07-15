@@ -26,9 +26,9 @@ const EmployeeDetails = () => {
 
         const data = Array.isArray(res.data.payments)
           ? res.data.payments.map(p => ({
-              monthYear: `${p.month}/${p.year}`,
-              salary: p.salary,
-            }))
+            monthYear: `${p.month}/${p.year}`,
+            salary: p.salary,
+          }))
           : [];
 
         setPayments(data);
@@ -52,13 +52,14 @@ const EmployeeDetails = () => {
 
       <div className="flex items-center gap-4 mb-6">
         <img
-          src={user.photo || 'https://i.ibb.co/HC5wMX9/avatar.png'}
+          src={user.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=random`}
           alt={user.name}
           className="w-24 h-24 rounded-full object-cover"
         />
+
         <div>
           <p><strong>Designation:</strong> {user.designation}</p>
-          <p><strong>Email:</strong> {user.email}</p>
+          <p><strong>Email:</strong> {user.email}</p>n
         </div>
       </div>
 
