@@ -33,7 +33,7 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <div className="hidden lg:flex items-center gap-6">
           <NavLink to="/" className="text-sm font-semibold hover:text-pink-600">Home</NavLink>
-          <NavLink to="/npm contact" className="text-sm font-semibold hover:text-pink-600">Contact</NavLink>
+          <NavLink to="/contact-us" className="text-sm font-semibold hover:text-pink-600">Contact Us</NavLink>
 
           {user && (
             <NavLink to="/dashboard" className="text-sm font-semibold hover:text-pink-600">

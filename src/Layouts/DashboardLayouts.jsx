@@ -67,7 +67,7 @@ const DashboardLayouts = () => {
               <br />
               <NavLink to="/dashboard/payroll" className={navItemClass}>Payroll</NavLink>
               <br />
-              <NavLink to="/dashboard/messages" className={navItemClass}>Messages</NavLink>
+              <NavLink to="/admin/messages" className={navItemClass}>Admin Messages</NavLink>
             </>
           )}
 

@@ -17,6 +17,8 @@ import AllEmployeeList from "../Pages/Dashboard/AllEmployeeList";
 import AdminRoute from "../components/routes/AdminRoute";
 import Payroll from "../Pages/Dashboard/Payroll";
 import Payment from "../Pages/Dashboard/Payment/Payment";
+import ContactUs from "../Pages/Home/ContactUs";
+import AdminMessages from "../Pages/Dashboard/AdminMessages";
 
 
 export const router = createBrowserRouter([
@@ -35,6 +37,14 @@ export const router = createBrowserRouter([
       {
         path: '/register',
         Component: Register
+      },
+      {
+        path: '/contact-us',
+        Component: ContactUs
+      },
+       {
+        path: "/admin/messages" ,
+        element: <AdminMessages></AdminMessages> 
       },
       // {
       //   path: '/dashboard/work-sheet',
@@ -59,6 +69,7 @@ export const router = createBrowserRouter([
         index: true, // ✅ Default landing page
         element: <DashboardHome />
       },
+      
       // ✅ Employee-only
       {
         path: "work-sheet",
@@ -92,6 +103,7 @@ export const router = createBrowserRouter([
         path: "payroll",
         element: <AdminRoute><Payroll /></AdminRoute>
       },
+     
       {
         path: 'payment/:id',
         element: <Payment></Payment>
