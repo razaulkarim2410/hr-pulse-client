@@ -15,6 +15,8 @@ import EmployeeDetails from "../Pages/Dashboard/EmployeeDetails";
 import ProgressPage from "../Pages/Dashboard/ProgressPage";
 import AllEmployeeList from "../Pages/Dashboard/AllEmployeeList";
 import AdminRoute from "../components/routes/AdminRoute";
+import Payroll from "../Pages/Dashboard/Payroll";
+import Payment from "../Pages/Dashboard/Payment/Payment";
 
 
 export const router = createBrowserRouter([
@@ -86,10 +88,14 @@ export const router = createBrowserRouter([
         path: "all-employee-list",
         element: <AdminRoute><AllEmployeeList /></AdminRoute>
       },
-      // {
-      //   path: "payroll",
-      //   element: <AdminRoute><Payroll /></AdminRoute>
-      // },
+      {
+        path: "payroll",
+        element: <AdminRoute><Payroll /></AdminRoute>
+      },
+      {
+        path: 'payment/:id',
+        element: <Payment></Payment>
+      }
     ]
   }
 ]);

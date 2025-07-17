@@ -1,0 +1,123 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
+
+const Payroll = () => {
+  const [payrolls, setPayrolls] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate()
+
+  // Fetch payroll requests
+  const fetchPayrolls = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get("http://localhost:5000/payroll"); // update base URL
+      setPayrolls(res.data);
+    } catch (err) {
+      console.error("Error fetching payrolls:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Handle "Pay" button click
+  const handlePay = async (id) => {
+    navigate(`/dashboard/payment/${id}`)
+    const confirm = await Swal.fire({
+      title: "Confirm Payment?",
+      text: "Do you want to proceed with payment?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, Pay",
+    });
+
+    if (!confirm.isConfirmed) return;
+
+    try {
+      const res = await axios.patch(`http://localhost:5000/payroll/${id}/pay`, {
+        paymentDate: new Date().toISOString(),
+      });
+
+      if (res.data.success) {
+        Swal.fire("Success", "Payment completed", "success");
+        // Update only the paid record in local state
+        setPayrolls((prev) =>
+          prev.map((item) =>
+            item._id === id ? { ...item, status: "paid", paymentDate: new Date().toISOString() } : item
+          )
+        );
+      }
+    } catch (err) {
+      console.error("Payment error:", err);
+      Swal.fire("Error", "Payment failed", "error");
+    }
+  };
+
+  useEffect(() => {
+    fetchPayrolls();
+  }, []);
+
+  return (
+    <div className="max-w-6xl mx-auto px-4 py-6">
+      <h1 className="text-2xl font-bold mb-6">Payroll Requests</h1>
+
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="table w-full border">
+            <thead>
+              <tr className="bg-gray-100">
+                <th>Name</th>
+                <th>Email</th>
+                <th>Month</th>
+                <th>Year</th>
+                <th>Salary</th>
+                <th>Payment Date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {payrolls.map((pay) => (
+                <tr key={pay._id}>
+                  <td>{pay.name}</td>
+                  <td>{pay.email}</td>
+                  <td>{pay.month}</td>
+                  <td>{pay.year}</td>
+                  <td>৳{pay.salary}</td>
+                  <td>
+                    {pay.status === "paid"
+                      ? new Date(pay.paymentDate).toLocaleDateString()
+                      : "—"}
+                  </td>
+                  <td>
+                    {pay.status === "paid" ? (
+                      <span className="text-green-600 font-semibold">Paid</span>
+                    ) : (
+                      <button
+                        onClick={() => handlePay(pay._id)}
+                        className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
+                      >
+                        Pay
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+              {payrolls.length === 0 && (
+                <tr>
+                  <td colSpan="7" className="text-center py-4">
+                    No payroll requests found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Payroll;

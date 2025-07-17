@@ -37,10 +37,10 @@ const DashboardLayouts = () => {
           <h2 className="text-2xl font-bold text-pink-700">HRPulse</h2>
           <p className="text-sm text-gray-600">Dashboard</p>
         </div>
-
+        
         <nav className="space-y-2">
           <NavLink to="/" className={navItemClass}>Home</NavLink>
-          
+          <br />
           {userInfo.role === 'Employee' && (
             <>
               <NavLink to="/dashboard/work-sheet" className={navItemClass}>Work Sheet</NavLink>

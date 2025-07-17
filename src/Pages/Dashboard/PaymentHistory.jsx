@@ -47,8 +47,15 @@ const PaymentHistory = () => {
               <tr key={idx}>
                 <td>{item.month}</td>
                 <td>{item.year}</td>
-                <td>৳{item.amount}</td>
-                <td>{item.transactionId}</td>
+
+                <td>৳{item.salary}</td>
+                
+                <td>{item.transactionId || item._id?.slice(-6)}</td>
+                <td>
+                  {item.paymentDate ? new Date(item.paymentDate).toLocaleDateString() : "N/A"}
+                </td>
+
+
               </tr>
             ))}
           </tbody>
