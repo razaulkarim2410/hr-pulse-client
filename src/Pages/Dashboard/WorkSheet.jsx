@@ -72,8 +72,8 @@ const WorkSheet = () => {
   };
 
   return (
-    <div className="p-4 mt-20 w-11/12 mx-auto items-center">
-      <h2 className="text-3xl font-bold mb-4 text-center">Work Sheet</h2>
+    <div className="p-4  w-11/12 mx-auto items-center">
+      <h2 className="text-3xl font-bold mb-6 text-center">Work Sheet</h2>
       <form onSubmit={handleSubmit} className="flex gap-2 flex-wrap items-center justify-center">
         <select value={task} onChange={e => setTask(e.target.value)} className="select">
           <option>Sales</option>
@@ -110,7 +110,7 @@ const WorkSheet = () => {
               <td>{item.date}</td>
               <td>
                 <button className="btn btn-xs btn-warning mr-2" onClick={() => setEditItem(item)}>✏️</button>
-                <button className="btn btn-xs btn-error" onClick={() => handleDelete(item._id)}>❌</button>
+                <button className="btn btn-xs hover:bg-white hover:text-red-700" onClick={() => handleDelete(item._id)}>❌</button>
               </td>
             </tr>
           ))}

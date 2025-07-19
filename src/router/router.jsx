@@ -16,7 +16,7 @@ import ProgressPage from "../Pages/Dashboard/ProgressPage";
 import AllEmployeeList from "../Pages/Dashboard/AllEmployeeList";
 import AdminRoute from "../components/routes/AdminRoute";
 import Payroll from "../Pages/Dashboard/Payroll";
-import Payment from "../Pages/Dashboard/Payment/Payment";
+
 import ContactUs from "../Pages/Home/ContactUs";
 import AdminMessages from "../Pages/Dashboard/AdminMessages";
 import EmployeePayment from "../Pages/Dashboard/EmployeePayment";
