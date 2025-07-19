@@ -20,8 +20,10 @@ const WorkSheet = () => {
     enabled: !!email,
     queryFn: async () => {
       const res = await fetch(`http://localhost:5000/worksheets?email=${email}`);
-      return res.json();
+      const data = await res.json();
+      return data.sort((a, b) => new Date(b.date) - new Date(a.date)); // sort newest first
     }
+
   });
 
   const handleSubmit = async e => {
@@ -30,7 +32,8 @@ const WorkSheet = () => {
       task,
       hours: Number(hours),
       date: date.toDateString(),
-      email
+      email,
+        name: user?.displayName || ''
     };
     const res = await fetch('http://localhost:5000/worksheets', {
       method: "POST",

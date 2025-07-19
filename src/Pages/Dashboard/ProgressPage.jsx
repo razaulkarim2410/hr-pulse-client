@@ -22,27 +22,36 @@ const ProgressPage = () => {
   }, []);
 
   // Fetch filtered worksheet data
-  useEffect(() => {
-    const fetchWorks = async () => {
-      if (!selectedMonth) return; // Month is required
+ useEffect(() => {
+  const fetchWorks = async () => {
+    if (!selectedMonth) return;
 
-      setLoading(true);
-      try {
-        const res = await axios.get("http://localhost:5000/progress", {
-          params: {
-            name: selectedName,
-            month: selectedMonth,
-          },
-        });
-        setWorks(res.data);
-      } catch (err) {
-        console.error("Failed to fetch works", err);
-      } finally {
-        setLoading(false);
+    setLoading(true);
+    try {
+      let selectedEmail = "";
+      if (selectedName) {
+        const found = employees.find(emp => emp.name === selectedName);
+        selectedEmail = found?.email || "";
       }
-    };
-    fetchWorks();
-  }, [selectedName, selectedMonth]);
+
+      const res = await axios.get("http://localhost:5000/progress", {
+        params: {
+          email: selectedEmail,
+          month: selectedMonth,
+        },
+      });
+
+      setWorks(res.data);
+    } catch (err) {
+      console.error("Failed to fetch works", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchWorks();
+}, [selectedName, selectedMonth, employees]);
+
 
   return (
     <div className="w-11/12 mx-auto py-10">
@@ -96,7 +105,7 @@ const ProgressPage = () => {
                     <td>{i + 1}</td>
                     <td>{task.name}</td>
                     <td>{task.date}</td>
-                    <td>{task.taskTitle}</td>
+                    <td>{task.task}</td>
                     <td>{task.hours}</td>
                   </tr>
                 ))}

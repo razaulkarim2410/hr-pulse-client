@@ -19,6 +19,7 @@ import Payroll from "../Pages/Dashboard/Payroll";
 import Payment from "../Pages/Dashboard/Payment/Payment";
 import ContactUs from "../Pages/Home/ContactUs";
 import AdminMessages from "../Pages/Dashboard/AdminMessages";
+import EmployeePayment from "../Pages/Dashboard/EmployeePayment";
 
 
 export const router = createBrowserRouter([
@@ -42,9 +43,9 @@ export const router = createBrowserRouter([
         path: '/contact-us',
         Component: ContactUs
       },
-       {
-        path: "/admin/messages" ,
-        element: <AdminMessages></AdminMessages> 
+      {
+        path: "/admin/messages",
+        element: <AdminMessages></AdminMessages>
       },
       // {
       //   path: '/dashboard/work-sheet',
@@ -69,7 +70,7 @@ export const router = createBrowserRouter([
         index: true, // ✅ Default landing page
         element: <DashboardHome />
       },
-      
+
       // ✅ Employee-only
       {
         path: "work-sheet",
@@ -103,11 +104,16 @@ export const router = createBrowserRouter([
         path: "payroll",
         element: <AdminRoute><Payroll /></AdminRoute>
       },
-     
+
+      // {
+      //   path: 'payment/:id',
+      //   element: <Payment></Payment>
+      // }
       {
-        path: 'payment/:id',
-        element: <Payment></Payment>
+        path: "/dashboard/payment/:id",
+        element: <EmployeePayment />,
       }
+
     ]
   }
 ]);

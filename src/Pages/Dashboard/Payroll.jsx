@@ -21,38 +21,22 @@ const Payroll = () => {
     }
   };
 
-  // Handle "Pay" button click
-  const handlePay = async (id) => {
-    navigate(`/dashboard/payment/${id}`)
-    const confirm = await Swal.fire({
-      title: "Confirm Payment?",
-      text: "Do you want to proceed with payment?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, Pay",
-    });
+ // Handle "Pay" button click
+const handlePay = async (id) => {
+  const confirm = await Swal.fire({
+    title: "Confirm Payment?",
+    text: "Do you want to proceed with payment?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Yes, Pay",
+  });
 
-    if (!confirm.isConfirmed) return;
+  if (confirm.isConfirmed) {
+    // ✅ Just navigate to Stripe payment page — all logic will be handled there
+    navigate(`/dashboard/payment/${id}`);
+  }
+};
 
-    try {
-      const res = await axios.patch(`http://localhost:5000/payroll/${id}/pay`, {
-        paymentDate: new Date().toISOString(),
-      });
-
-      if (res.data.success) {
-        Swal.fire("Success", "Payment completed", "success");
-        // Update only the paid record in local state
-        setPayrolls((prev) =>
-          prev.map((item) =>
-            item._id === id ? { ...item, status: "paid", paymentDate: new Date().toISOString() } : item
-          )
-        );
-      }
-    } catch (err) {
-      console.error("Payment error:", err);
-      Swal.fire("Error", "Payment failed", "error");
-    }
-  };
 
   useEffect(() => {
     fetchPayrolls();

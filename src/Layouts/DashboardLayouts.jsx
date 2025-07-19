@@ -35,21 +35,23 @@ const DashboardLayouts = () => {
       <div className="w-full md:w-64 bg-gray-100 shadow-md p-4">
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-pink-700">HRPulse</h2>
-          <p className="text-sm text-gray-600">Dashboard</p>
+          <p className="text-xl text-gray-600">Dashboard</p>
         </div>
-        
+
         <nav className="space-y-2">
           <NavLink to="/" className={navItemClass}>Home</NavLink>
           <br />
-          {userInfo.role === 'Employee' && (
+          {/* Employee & above */}
+          {['Employee', 'HR', 'Admin'].includes(userInfo.role) && (
             <>
               <NavLink to="/dashboard/work-sheet" className={navItemClass}>Work Sheet</NavLink>
               <br />
               <NavLink to="/dashboard/payment-history" className={navItemClass}>Payment History</NavLink>
             </>
           )}
-          <br />
-          {userInfo.role === 'HR' && (
+            <br />
+          {/* HR & Admin */}
+          {['HR', 'Admin'].includes(userInfo.role) && (
             <>
               <NavLink to="/dashboard/employee-list" className={navItemClass}>Employee List</NavLink>
               <br />
@@ -60,7 +62,8 @@ const DashboardLayouts = () => {
               <NavLink to="/dashboard/progress" className={navItemClass}>Progress</NavLink>
             </>
           )}
-          <br />
+            <br />
+          {/* Admin only */}
           {userInfo.role === 'Admin' && (
             <>
               <NavLink to="/dashboard/all-employee-list" className={navItemClass}>All Employees</NavLink>
@@ -70,6 +73,7 @@ const DashboardLayouts = () => {
               <NavLink to="/admin/messages" className={navItemClass}>Admin Messages</NavLink>
             </>
           )}
+
 
           <button
             onClick={handleLogout}

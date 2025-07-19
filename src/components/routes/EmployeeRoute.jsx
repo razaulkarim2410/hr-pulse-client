@@ -5,16 +5,19 @@ import Loader from "../../loader/Loader";
 
 
 const EmployeeRoute = ({ children }) => {
-  const { user, loading, userInfo } = useContext(AuthContext); // userInfo contains role etc.
+  const { user, loading, userInfo } = useContext(AuthContext);
   const location = useLocation();
 
   if (loading || !userInfo) return <Loader />;
 
-  if (!user || userInfo.role !== "Employee") {
+  const allowedRoles = ['Employee', 'HR', 'Admin'];
+
+  if (!user || !allowedRoles.includes(userInfo.role)) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   return children;
 };
+
 
 export default EmployeeRoute;

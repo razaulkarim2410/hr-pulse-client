@@ -41,7 +41,7 @@ const Navbar = () => {
             </NavLink>
           )}
 
-          {user && role === 'Employee' && (
+          {/* {user && role === 'Employee' && (
             <>
               <NavLink to="/dashboard/work-sheet" className="text-sm font-semibold hover:text-pink-600">Work Sheet</NavLink>
               <NavLink to="/dashboard/payment-history" className="text-sm font-semibold hover:text-pink-600">Payment History</NavLink>
@@ -64,7 +64,7 @@ const Navbar = () => {
               <NavLink to="/dashboard/all-employee-list" className="text-sm font-semibold hover:text-pink-600">All Employees</NavLink>
               <NavLink to="/dashboard/payroll" className="text-sm font-semibold hover:text-pink-600">Payroll</NavLink>
             </>
-          )}
+          )} */}
         </div>
 
         {/* Mobile Menu Button */}

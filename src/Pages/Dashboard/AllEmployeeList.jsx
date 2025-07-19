@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+const API_BASE = import.meta.env.VITE_API_URL;
+
+
 
 const AllEmployeeList = () => {
   const [employees, setEmployees] = useState([]);
@@ -8,8 +11,8 @@ const AllEmployeeList = () => {
 
   const fetchEmployees = async () => {
     try {
-      const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
       const res = await axios.get(`${API_BASE}/users/all`);
+
 
       if (Array.isArray(res.data)) {
         setEmployees(res.data);
@@ -37,7 +40,8 @@ const AllEmployeeList = () => {
     });
 
     if (confirmed.isConfirmed) {
-      await axios.put(`/users/${id}/make-hr`);
+      await axios.put(`${API_BASE}/users/${id}/make-hr`);
+
       fetchEmployees();
     }
   };
@@ -52,19 +56,26 @@ const AllEmployeeList = () => {
     });
 
     if (confirmed.isConfirmed) {
-      await axios.patch(`/users/${id}/fire`);
+      await axios.patch(`${API_BASE}/users/${id}/fire`);
+
       fetchEmployees();
     }
   };
 
   const handleSalaryUpdate = async (id, newSalary) => {
     if (!newSalary || isNaN(newSalary)) return;
-    await axios.patch(`/users/${id}/salary`, { salary: parseFloat(newSalary) });
+    await axios.patch(`${API_BASE}/users/${id}/salary`, {
+      salary: parseFloat(newSalary),
+    });
+
     fetchEmployees();
   };
 
   const handleVerify = async (id) => {
-    await axios.patch(`/users/${id}/verify`, { isVerified: true });
+    await axios.patch(`${API_BASE}/users/${id}/verify`, {
+      isVerified: true,
+    });
+
     fetchEmployees();
   };
 

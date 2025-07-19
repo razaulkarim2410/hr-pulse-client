@@ -10,11 +10,14 @@ const HRRoute = ({ children }) => {
 
   if (loading || !userInfo) return <Loader />;
 
-  if (!user || userInfo.role !== "HR") {
+  const allowedRoles = ['HR', 'Admin'];
+
+  if (!user || !allowedRoles.includes(userInfo.role)) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   return children;
 };
+
 
 export default HRRoute;
