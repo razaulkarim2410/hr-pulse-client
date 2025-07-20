@@ -21,7 +21,7 @@ const ContactUs = () => {
       Swal.fire("Error", "Something went wrong", "error");
     }
   };
-
+ 
   return (
     <div className="p-6 max-w-2xl mx-auto space-y-6">
       <h2 className="text-3xl font-bold">✉ Contact Us</h2>

@@ -29,34 +29,48 @@ const AuthProvider = ({ children }) => {
     return updateProfile(auth.currentUser, updateData);
   };
 
+
   const logoutUser = () => {
-    setLoading(true);
-    return signOut(auth);
-  };
+  setLoading(true);
+  localStorage.removeItem("token"); // ✅ Clear JWT
+  return signOut(auth);
+};
 
-  useEffect(() => {
-    const unSubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      setUser(currentUser);
+ useEffect(() => {
+  const unSubscribe = onAuthStateChanged(auth, async (currentUser) => {
+    setUser(currentUser);
 
-      if (currentUser?.email) {
-        try {
-          const res = await axios.get(`http://localhost:5000/users/${currentUser.email}`
+    if (currentUser?.email) {
+      try {
+        // ✅ Get JWT Token and store it
+        const tokenRes = await axios.post("http://localhost:5000/jwt", {
+          email: currentUser.email,
+        });
 
-          );
-          setUserInfo(res.data);
-        } catch (err) {
-          console.error("Error fetching userInfo:", err);
-          setUserInfo(null);
-        }
-      } else {
+        localStorage.setItem("token", tokenRes.data.token); // Store JWT in localStorage
+
+        // ✅ Get user info from DB
+        const userInfoRes = await axios.get(
+          `http://localhost:5000/users/${currentUser.email}`
+        );
+
+        setUserInfo(userInfoRes.data);
+      } catch (err) {
+        console.error("Error fetching userInfo or JWT:", err);
         setUserInfo(null);
       }
+    } else {
+      // 🧹 User logged out
+      localStorage.removeItem("token"); // Clear token
+      setUserInfo(null);
+    }
 
-      setLoading(false);
-    });
+    setLoading(false);
+  });
 
-    return () => unSubscribe();
-  }, []);
+  return () => unSubscribe();
+}, []);
+
 
   const authInfo = {
     loading,
