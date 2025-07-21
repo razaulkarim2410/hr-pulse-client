@@ -3,6 +3,7 @@ import { FaEye } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../../contexts/AuthContext/AuthContext';
 import Swal from 'sweetalert2';
+import { Helmet } from 'react-helmet-async';
 
 const Register = () => {
   const { createUser, updateUser, setUser } = React.useContext(AuthContext);
@@ -69,7 +70,10 @@ const Register = () => {
   };
 
   return (
-    <div className="card bg-base-100 w-full max-w-sm shadow-2xl mx-auto mt-28">
+    <div className="card bg-base-100 w-full max-w-sm shadow-2xl mx-auto my-20">
+      <Helmet>
+        <title>Register</title>
+      </Helmet>
       <h2 className="text-4xl font-bold text-center py-4">Register Your Account</h2>
       <form onSubmit={handleRegister} className="card-body">
         <label className="label">Name</label>
@@ -99,7 +103,7 @@ const Register = () => {
           <option value="HR">HR</option>
         </select>
 
-        <button type="submit" className="btn btn-neutral mt-4">Register</button>
+        <button type="submit" className="btn  bg-pink-700 text-white hover:bg-white hover:text-pink-700 mt-4">Register</button>
         <p className="text-sm pt-4">Already have an account? <Link to="/login" className="text-pink-700 underline">Login</Link></p>
       </form>
     </div>

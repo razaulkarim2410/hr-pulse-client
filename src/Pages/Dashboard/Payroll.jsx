@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
+import { Helmet } from "react-helmet-async";
 
 const Payroll = () => {
   const [payrolls, setPayrolls] = useState([]);
@@ -21,31 +22,34 @@ const Payroll = () => {
     }
   };
 
- // Handle "Pay" button click
-const handlePay = async (id) => {
-  const confirm = await Swal.fire({
-    title: "Confirm Payment?",
-    text: "Do you want to proceed with payment?",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonText: "Yes, Pay",
-  });
+  // Handle "Pay" button click
+  const handlePay = async (id) => {
+    const confirm = await Swal.fire({
+      title: "Confirm Payment?",
+      text: "Do you want to proceed with payment?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, Pay",
+    });
 
-  if (confirm.isConfirmed) {
-    // ✅ Just navigate to Stripe payment page — all logic will be handled there
-    navigate(`/dashboard/payment/${id}`);
-  }
-};
+    if (confirm.isConfirmed) {
+      // ✅ Just navigate to Stripe payment page — all logic will be handled there
+      navigate(`/dashboard/payment/${id}`);
+    }
+  };
 
 
   useEffect(() => {
     fetchPayrolls();
   }, []);
 
-  
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-6">
-      <h1 className="text-2xl font-bold mb-6">Payroll Requests</h1>
+      <Helmet>
+        <title>Dashboard | Payroll</title>
+      </Helmet>
+      <h1 className="text-3xl font-bold mb-6">Payroll Requests</h1>
 
       {loading ? (
         <p>Loading...</p>

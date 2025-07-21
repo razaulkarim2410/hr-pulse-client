@@ -5,6 +5,7 @@ import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import Swal from "sweetalert2";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../firebase/firebase.config";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const { loginUser, setUser } = useContext(AuthContext);
@@ -60,7 +61,11 @@ const Login = () => {
   };
 
   return (
-    <div className="card bg-base-100 w-full max-w-sm shadow-2xl mx-auto mt-28">
+
+    <div className="card bg-base-100 w-full max-w-sm shadow-2xl mx-auto my-20">
+      <Helmet>
+        <title>Login</title>
+      </Helmet>
       <h1 className="text-4xl font-bold text-center mt-6">Login</h1>
       <form onSubmit={handleLogin} className="card-body">
         <label className="label">Email</label>
@@ -77,7 +82,7 @@ const Login = () => {
           <FaEye className="absolute top-3 right-3 cursor-pointer" onClick={() => setShowPassword(!showPassword)} />
         </div>
 
-        <button type="submit" className="btn btn-neutral mt-4">Login</button>
+        <button type="submit" className="btn  bg-pink-700 text-white hover:bg-white hover:text-pink-700 mt-4">Login</button>
 
         <button type="button" onClick={handleGoogleSignIn} className="btn mt-4 text-lg font-bold flex items-center gap-2">
           <img src="https://img.icons8.com/color/16/google-logo.png" alt="Google" /> Sign in with Google

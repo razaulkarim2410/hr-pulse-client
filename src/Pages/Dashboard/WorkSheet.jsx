@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { auth } from '../../firebase/firebase.config';
+import { Helmet } from 'react-helmet-async';
 
 const WorkSheet = () => {
   const [task, setTask] = useState('Sales');
@@ -33,7 +34,7 @@ const WorkSheet = () => {
       hours: Number(hours),
       date: date.toDateString(),
       email,
-        name: user?.displayName || ''
+      name: user?.displayName || ''
     };
     const res = await fetch('http://localhost:5000/worksheets', {
       method: "POST",
@@ -73,6 +74,9 @@ const WorkSheet = () => {
 
   return (
     <div className="p-4  w-11/12 mx-auto items-center">
+      <Helmet>
+        <title>Dashboard | Work Sheet</title>
+      </Helmet>
       <h2 className="text-3xl font-bold mb-6 text-center">Work Sheet</h2>
       <form onSubmit={handleSubmit} className="flex gap-2 flex-wrap items-center justify-center">
         <select value={task} onChange={e => setTask(e.target.value)} className="select">

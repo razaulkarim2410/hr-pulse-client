@@ -9,6 +9,7 @@ import {
 } from "@stripe/react-stripe-js";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
 
@@ -50,6 +51,9 @@ const CheckoutForm = ({ payroll }) => {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto p-6 bg-white rounded shadow">
+      <Helmet>
+        <title>Dashboard | Employee Payment</title>
+      </Helmet>
       <h2 className="text-xl font-semibold mb-4">Pay ৳{payroll.salary} to {payroll.name}</h2>
       <CardElement className="border p-3 mb-4 rounded" />
       <button

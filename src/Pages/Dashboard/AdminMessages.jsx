@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
 
 const AdminMessages = () => {
   const [messages, setMessages] = useState([]);
@@ -25,6 +26,9 @@ const AdminMessages = () => {
 
   return (
     <div className="p-6 max-w-5xl mx-auto">
+      <Helmet>
+        <title>Admin Message</title>
+      </Helmet>
       <h2 className="text-3xl font-bold mb-6">📩 Contact Messages</h2>
 
       {messages.length === 0 ? (

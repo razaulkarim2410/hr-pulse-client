@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
 
 const ProgressPage = () => {
   const [works, setWorks] = useState([]);
@@ -22,40 +23,43 @@ const ProgressPage = () => {
   }, []);
 
   // Fetch filtered worksheet data
- useEffect(() => {
-  const fetchWorks = async () => {
-    if (!selectedMonth) return;
+  useEffect(() => {
+    const fetchWorks = async () => {
+      if (!selectedMonth) return;
 
-    setLoading(true);
-    try {
-      let selectedEmail = "";
-      if (selectedName) {
-        const found = employees.find(emp => emp.name === selectedName);
-        selectedEmail = found?.email || "";
+      setLoading(true);
+      try {
+        let selectedEmail = "";
+        if (selectedName) {
+          const found = employees.find(emp => emp.name === selectedName);
+          selectedEmail = found?.email || "";
+        }
+
+        const res = await axios.get("http://localhost:5000/progress", {
+          params: {
+            email: selectedEmail,
+            month: selectedMonth,
+          },
+        });
+
+        setWorks(res.data);
+      } catch (err) {
+        console.error("Failed to fetch works", err);
+      } finally {
+        setLoading(false);
       }
+    };
 
-      const res = await axios.get("http://localhost:5000/progress", {
-        params: {
-          email: selectedEmail,
-          month: selectedMonth,
-        },
-      });
-
-      setWorks(res.data);
-    } catch (err) {
-      console.error("Failed to fetch works", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  fetchWorks();
-}, [selectedName, selectedMonth, employees]);
+    fetchWorks();
+  }, [selectedName, selectedMonth, employees]);
 
 
   return (
-    <div className="w-11/12 mx-auto py-10">
-      <h2 className="text-2xl font-bold mb-6 text-center">Employee Work Progress</h2>
+    <div className="w-11/12 mx-auto py-5">
+      <Helmet>
+        <title>Dashboard | Progress Page</title>
+      </Helmet>
+      <h2 className="text-3xl font-bold mb-6 text-center">Employee Work Progress</h2>
 
       <div className="flex flex-wrap gap-4 mb-6 justify-center">
         <select

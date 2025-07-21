@@ -32,7 +32,7 @@ const AuthProvider = ({ children }) => {
 
   const logoutUser = () => {
   setLoading(true);
-  localStorage.removeItem("token"); // ✅ Clear JWT
+  localStorage.removeItem("access-token"); // ✅ Clear JWT
   return signOut(auth);
 };
 
@@ -47,7 +47,7 @@ const AuthProvider = ({ children }) => {
           email: currentUser.email,
         });
 
-        localStorage.setItem("token", tokenRes.data.token); // Store JWT in localStorage
+        localStorage.setItem("access-token", tokenRes.data.token); // Store JWT in localStorage
 
         // ✅ Get user info from DB
         const userInfoRes = await axios.get(

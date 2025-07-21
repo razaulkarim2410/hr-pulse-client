@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { auth } from '../../firebase/firebase.config';
 import Swal from 'sweetalert2';
+import { Helmet } from 'react-helmet-async';
 
 const PaymentHistory = () => {
   const user = auth.currentUser;
@@ -30,7 +31,10 @@ const PaymentHistory = () => {
   const totalPages = Math.ceil(total / limit);
 
   return (
-    <div className="p-4 mt-20">
+    <div className="p-4">
+      <Helmet>
+        <title>Dashboard | Payment History</title>
+      </Helmet>
       <h2 className="text-3xl font-bold mb-4">Payment History</h2>
       <div className="overflow-x-auto">
         <table className="table table-zebra">
@@ -49,7 +53,7 @@ const PaymentHistory = () => {
                 <td>{item.year}</td>
 
                 <td>৳{item.salary}</td>
-                
+
                 <td>{item.transactionId || item._id?.slice(-6)}</td>
                 <td>
                   {item.paymentDate ? new Date(item.paymentDate).toLocaleDateString() : "N/A"}

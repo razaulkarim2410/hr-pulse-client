@@ -4,6 +4,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Label
 } from 'recharts';
 import axios from 'axios';
+import { Helmet } from 'react-helmet-async';
 
 const EmployeeDetails = () => {
   const { slug } = useParams();
@@ -48,6 +49,9 @@ const EmployeeDetails = () => {
 
   return (
     <div className="p-4 max-w-4xl mx-auto">
+      <Helmet>
+        <title>Dashboard | Employee Details</title>
+      </Helmet>
       <h2 className="text-3xl font-bold mb-4">{user.name}</h2>
 
       <div className="flex items-center gap-4 mb-6">

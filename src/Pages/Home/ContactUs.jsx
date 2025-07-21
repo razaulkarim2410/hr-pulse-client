@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({ email: "", message: "" });
@@ -21,9 +22,12 @@ const ContactUs = () => {
       Swal.fire("Error", "Something went wrong", "error");
     }
   };
- 
+
   return (
     <div className="p-6 max-w-2xl mx-auto space-y-6">
+      <Helmet>
+        <title>Contact Us</title>
+      </Helmet>
       <h2 className="text-3xl font-bold">✉ Contact Us</h2>
 
       <div>

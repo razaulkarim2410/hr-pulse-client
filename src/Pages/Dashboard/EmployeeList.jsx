@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const EmployeeList = () => {
   const queryClient = useQueryClient();
@@ -31,17 +32,30 @@ const EmployeeList = () => {
   });
 
   const payrollMutation = useMutation({
-    mutationFn: async (payData) => {
-      const res = await axios.post("http://localhost:5000/payroll", payData);
-      return res.data;
-    },
-    onSuccess: () => {
-      Swal.fire("Success", "Payment request submitted", "success");
-      setSelectedEmployee(null);
-      setMonth("");
-      setYear("");
-    },
-  });
+  mutationFn: async (payData) => {
+    const token = localStorage.getItem("access-token"); // Get token from localStorage
+    const res = await axios.post("https://hr-pulse-server.vercel.app/payroll", payData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  },
+  onSuccess: () => {
+    Swal.fire("Success", "Payment request submitted", "success");
+    setSelectedEmployee(null);
+    setMonth("");
+    setYear("");
+  },
+  onError: (error) => {
+    if (error.response?.status === 401) {
+      Swal.fire("Unauthorized", "Please login again", "error");
+    } else {
+      Swal.fire("Error", error.message || "Something went wrong", "error");
+    }
+  }
+});
+
 
   const handleVerify = (id, currentStatus) => {
     verifyMutation.mutate({ id, isVerified: !currentStatus });
@@ -65,7 +79,10 @@ const EmployeeList = () => {
   if (isLoading) return <div className="text-center mt-10">Loading...</div>;
 
   return (
-    <div className=" py-10 mt-14 w-11/12 mx-auto">
+    <div className=" py-5 w-11/12 mx-auto">
+      <Helmet>
+              <title>Dashboard | Employee List</title>
+            </Helmet>
       <h2 className="text-3xl font-semibold mb-6  text-center">Employee List</h2>
       <div className="overflow-x-auto">
         <table className="min-w-full table-auto border text-sm">

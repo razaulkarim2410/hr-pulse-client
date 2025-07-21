@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 const API_BASE = import.meta.env.VITE_API_URL;
 
 const AllEmployeeList = () => {
@@ -84,6 +85,9 @@ const AllEmployeeList = () => {
 
   return (
     <div className="p-4">
+      <Helmet>
+        <title>Dashboard | All Employee</title>
+      </Helmet>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-3xl font-bold">All Employees</h2>
         <button

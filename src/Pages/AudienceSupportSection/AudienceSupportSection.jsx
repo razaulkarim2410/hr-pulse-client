@@ -1,29 +1,33 @@
 import React, { useEffect, useState } from "react";
+import img1 from '../../assets/pexels-pavel-danilyuk-7654629.jpg'
+import img2 from '../../assets/pexels-fauxels-3183153.jpg'
+import img3 from '../../assets/pexels-artempodrez-5716001.jpg'
+import img4 from '../../assets/pexels-yankrukov-7691722.jpg'
 
 const cards = [
   {
     title: "HR Leaders",
     description: "Unify HR processes and empower teams to thrive.",
     icon: "📋",
-    image: "/src/assets/pexels-pavel-danilyuk-7654629.jpg",
+    image: img1,
   },
   {
     title: "Team Leads",
     description: "Track and support your team’s performance with ease.",
     icon: "👥",
-    image: "/src/assets/pexels-fauxels-3183153.jpg",
+    image: img2,
   },
   {
     title: "Finance",
     description: "Gain clarity on costs and automate compensation.",
     icon: "💰",
-    image: "/src/assets/pexels-artempodrez-5716001.jpg",
+    image: img3,
   },
   {
     title: "Employees",
     description: "Access payslips, manage leave, and track progress.",
     icon: "🧑‍💻",
-    image: "/src/assets/pexels-yankrukov-7691722.jpg",
+    image: img4,
   },
 ];
 

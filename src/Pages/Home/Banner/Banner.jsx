@@ -7,7 +7,7 @@ import { Carousel } from 'react-responsive-carousel';
 
 const Banner = () => {
   return (
-    <div className=' w-11/12 mx-auto pt-10'>
+    <div className=' w-11/12 mx-auto '>
       <Carousel autoPlay={true} infiniteLoop={true} showThumbs={false}>
         <div
           className="hero h-250px w-full rounded-xl py-10 mt-14  bg-cover bg-center"

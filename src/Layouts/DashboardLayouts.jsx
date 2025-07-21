@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet, useNavigate } from 'react-router';
 import { AuthContext } from '../contexts/AuthContext/AuthContext';
 import Swal from 'sweetalert2';
 import { FaSignOutAlt, FaTachometerAlt } from 'react-icons/fa';
+import { Helmet } from 'react-helmet-async';
 
 const DashboardLayouts = () => {
   const { user, logoutUser, userInfo } = useContext(AuthContext);
@@ -32,6 +33,9 @@ const DashboardLayouts = () => {
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
       {/* Sidebar */}
+      <Helmet>
+        <title>Dashboard</title>
+      </Helmet>
       <div className="w-full md:w-64 bg-gray-100 shadow-md p-4">
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-pink-700">HRPulse</h2>
@@ -49,7 +53,7 @@ const DashboardLayouts = () => {
               <NavLink to="/dashboard/payment-history" className={navItemClass}>Payment History</NavLink>
             </>
           )}
-            <br />
+          <br />
           {/* HR & Admin */}
           {['HR', 'Admin'].includes(userInfo.role) && (
             <>
@@ -62,7 +66,7 @@ const DashboardLayouts = () => {
               <NavLink to="/dashboard/progress" className={navItemClass}>Progress</NavLink>
             </>
           )}
-            <br />
+          <br />
           {/* Admin only */}
           {userInfo.role === 'Admin' && (
             <>
