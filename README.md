@@ -4,8 +4,7 @@ Website Name- HRPulse
 
 **Live Site:** https://hr-pulse-b9fea.web.app/ 
 
-Admin username- Nasif Azara
-Password- 1234Azad@
+
 
 
 ## 🚀 Overview
