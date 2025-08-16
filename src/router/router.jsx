@@ -28,6 +28,10 @@ import CookiePolicy from "../shared/CookiePolicy";
 import EmployeesDetails from "../Pages/Home/HowItWorks/EmployeesDetails";
 import HRDetails from "../Pages/Home/HowItWorks/HRDetails";
 import AdminDetails from "../Pages/Home/HowItWorks/AdminDetails";
+import ErrorPage from "../shared/ErrorPage/ErrorPage";
+import CarouselOne from "../shared/CarouselOne/CarouselOne";
+import CarouselTwo from "../shared/CarouselTwo/CarouselTwo";
+import CarouselThree from "../shared/CarouselThree/CarouselThree";
 
 
 export const router = createBrowserRouter([
@@ -86,6 +90,18 @@ export const router = createBrowserRouter([
       {
         path:"/admin",
         element:<AdminDetails></AdminDetails>
+      },
+      {
+        path: "/carousel-one",
+        element:<CarouselOne></CarouselOne>
+      },
+      {
+        path:"/carousel-two",
+        element:<CarouselTwo></CarouselTwo>
+      },
+      {
+        path: "/carousel-three",
+        element: <CarouselThree></CarouselThree>
       }
       
     ]
@@ -138,5 +154,9 @@ export const router = createBrowserRouter([
       }
 
     ]
-  }
+  },
+  {
+    path: "/*",
+    element:<ErrorPage></ErrorPage>
+  },
 ]);

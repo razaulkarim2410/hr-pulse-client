@@ -4,8 +4,10 @@ import image1 from '../../../assets/pexels-cottonbro-5990034.jpg'
 import image2 from '../../../assets/pexels-divinetechygirl-1181408.jpg'
 import image3 from '../../../assets/pexels-vlada-karpovich-7433852.jpg'
 import { Carousel } from 'react-responsive-carousel';
+import { useNavigate } from 'react-router';
 
 const Banner = () => {
+  const navigate = useNavigate()
   return (
     <div className=' w-11/12 mx-auto '>
       <Carousel autoPlay={true} infiniteLoop={true} showThumbs={false}>
@@ -22,7 +24,12 @@ const Banner = () => {
               <p className="mb-5 font-bold">
                HRPulse lets you streamline employee workflows, monitor performance, and handle payroll—all from one powerful dashboard.
               </p>
-              <button className="btn   bg-pink-700 text-white hover:bg-white hover:text-pink-700">Get Started</button>
+              <button
+                onClick={() => navigate("/carousel-one")}
+                className="btn bg-pink-700 text-white hover:bg-white hover:text-pink-700"
+              >
+                Get Started
+              </button>
             </div>
           </div>
         </div>
@@ -39,7 +46,12 @@ const Banner = () => {
               <p className="mb-5 font-bold">
                 Stay ahead with real-time employee updates, contract records, and seamless payroll. HRPulse puts control in your hands.
               </p>
-              <button className="btn  bg-pink-700 text-white hover:bg-white hover:text-pink-700">Get Started</button>
+              <button
+                onClick={() => navigate("/carousel-two")}
+                className="btn bg-pink-700 text-white hover:bg-white hover:text-pink-700"
+              >
+                Get Started
+              </button>
             </div>
           </div>
         </div>
@@ -56,7 +68,12 @@ const Banner = () => {
               <p className="mb-5 font-bold">
                HRPulse helps HR executives and teams manage tasks, track progress, and automate admin work—effortlessly and efficiently.
               </p>
-              <button className="btn  bg-pink-700 text-white hover:bg-white hover:text-pink-700">Get Started</button>
+              <button
+                onClick={() => navigate("/carousel-three")}
+                className="btn bg-pink-700 text-white hover:bg-white hover:text-pink-700"
+              >
+                Get Started
+              </button>
             </div>
           </div>
         </div>
