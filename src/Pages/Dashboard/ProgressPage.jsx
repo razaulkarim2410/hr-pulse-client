@@ -13,7 +13,7 @@ const ProgressPage = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/users");
+        const res = await axios.get("https://hr-pulse-server.vercel.app/users");
         setEmployees(res.data);
       } catch (err) {
         console.error("Failed to fetch employees", err);
@@ -35,7 +35,7 @@ const ProgressPage = () => {
           selectedEmail = found?.email || "";
         }
 
-        const res = await axios.get("http://localhost:5000/progress", {
+        const res = await axios.get("https://hr-pulse-server.vercel.app/progress", {
           params: {
             email: selectedEmail,
             month: selectedMonth,

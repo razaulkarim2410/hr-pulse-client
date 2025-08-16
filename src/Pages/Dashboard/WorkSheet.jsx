@@ -20,7 +20,7 @@ const WorkSheet = () => {
     queryKey: ['worksheets', email],
     enabled: !!email,
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/worksheets?email=${email}`);
+      const res = await fetch(`https://hr-pulse-server.vercel.app/worksheets?email=${email}`);
       const data = await res.json();
       return data.sort((a, b) => new Date(b.date) - new Date(a.date)); // sort newest first
     }
@@ -36,7 +36,7 @@ const WorkSheet = () => {
       email,
       name: user?.displayName || ''
     };
-    const res = await fetch('http://localhost:5000/worksheets', {
+    const res = await fetch('https://hr-pulse-server.vercel.app/worksheets', {
       method: "POST",
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newWork)
@@ -49,7 +49,7 @@ const WorkSheet = () => {
   };
 
   const handleDelete = async id => {
-    await fetch(`http://localhost:5000/worksheets/${id}`, {
+    await fetch(`https://hr-pulse-server.vercel.app/worksheets/${id}`, {
       method: "DELETE"
     });
     Swal.fire('Deleted!', 'Task removed.', 'success');
@@ -58,7 +58,7 @@ const WorkSheet = () => {
 
   const handleUpdate = async e => {
     e.preventDefault();
-    await fetch(`http://localhost:5000/worksheets/${editItem._id}`, {
+    await fetch(`https://hr-pulse-server.vercel.app/worksheets/${editItem._id}`, {
       method: "PUT",
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

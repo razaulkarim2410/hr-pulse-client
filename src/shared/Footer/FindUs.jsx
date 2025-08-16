@@ -12,11 +12,15 @@ const FindUs = () => {
       <div className=''>
         <div className="join join-vertical  gap-4">
 
-          <a className='flex gap-2 text-l font-bold items-center' href="https://www.facebook.com/razaul.karim.9809/"><SiFacebook /> Facebook</a>
-          <a className='flex gap-2 text-l font-bold items-center' href="https://www.linkedin.com/feed/?trk=guest_homepage-basic_google-one-tap-submit"><FaLinkedin />Linkedin</a>
-          <a className='flex gap-2 text-l font-bold items-center' href="https://x.com/RazaulKarim2410"><FaXTwitter />
+          <a className='flex gap-2 text-l font-bold items-center' href="https://www.facebook.com/share/179nE1FpYY/" target="_blank"
+            rel="noopener noreferrer"><SiFacebook /> Facebook</a>
+          <a className='flex gap-2 text-l font-bold items-center' href="https://www.linkedin.com/feed/?trk=guest_homepage-basic_google-one-tap-submit" target="_blank"
+            rel="noopener noreferrer"><FaLinkedin />Linkedin</a>
+          <a className='flex gap-2 text-l font-bold items-center' href="https://x.com/RazaulKarim2410" target="_blank"
+            rel="noopener noreferrer"><FaXTwitter />
             Twitter</a>
-          <a className='flex gap-2 text-l font-bold items-center' href="https://www.youtube.com/@Farzankarim-sd7lu"><IoLogoYoutube /> YouTube</a>
+          <a className='flex gap-2 text-l font-bold items-center' href="https://www.youtube.com/@Farzankarim-sd7lu" target="_blank"
+            rel="noopener noreferrer"><IoLogoYoutube /> YouTube</a>
         </div>
       </div>
     </div>

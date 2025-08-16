@@ -20,6 +20,14 @@ import Payroll from "../Pages/Dashboard/Payroll";
 import ContactUs from "../Pages/Home/ContactUs";
 import AdminMessages from "../Pages/Dashboard/AdminMessages";
 import EmployeePayment from "../Pages/Dashboard/EmployeePayment";
+import About from "../shared/About";
+import Contact from "../shared/Contact";
+import TermsOfUse from "../shared/TermsOfUse";
+import PrivacyPolicy from "../shared/PrivacyPolicy";
+import CookiePolicy from "../shared/CookiePolicy";
+import EmployeesDetails from "../Pages/Home/HowItWorks/EmployeesDetails";
+import HRDetails from "../Pages/Home/HowItWorks/HRDetails";
+import AdminDetails from "../Pages/Home/HowItWorks/AdminDetails";
 
 
 export const router = createBrowserRouter([
@@ -47,19 +55,39 @@ export const router = createBrowserRouter([
         path: "/admin/messages",
         element: <AdminMessages></AdminMessages>
       },
-      // {
-      //   path: '/dashboard/work-sheet',
-      //   Component: WorkSheet
-      // },
-      // {
-      //   path: '/dashboard/payment-history',
-      //   Component: PaymentHistory
-      // },
-      // {
-      //   path: '/dashboard/employee-list',
-      //   Component: EmployeeList
-      // },
-
+      {
+        path:'/about',
+        element:<About></About>
+      },
+      {
+        path:'/contact',
+        element: <Contact></Contact>
+      },
+      {
+        path:'/terms',
+        element:<TermsOfUse></TermsOfUse>
+      },
+      {
+        path: '/privacy',
+        element:<PrivacyPolicy></PrivacyPolicy>
+      },
+      {
+        path:'/cookie',
+        element: <CookiePolicy></CookiePolicy>
+      },
+      {
+        path:"/employees",
+        element:<EmployeesDetails></EmployeesDetails>
+      },
+      {
+        path:"/hr",
+        element:<HRDetails></HRDetails>
+      },
+      {
+        path:"/admin",
+        element:<AdminDetails></AdminDetails>
+      }
+      
     ]
   },
   {
@@ -67,7 +95,7 @@ export const router = createBrowserRouter([
     element: <PrivateRoute><DashboardLayouts /></PrivateRoute>,
     children: [
       {
-        index: true, // ✅ Default landing page
+        index: true, 
         element: <DashboardHome />
       },
 
@@ -104,11 +132,6 @@ export const router = createBrowserRouter([
         path: "payroll",
         element: <AdminRoute><Payroll /></AdminRoute>
       },
-
-      // {
-      //   path: 'payment/:id',
-      //   element: <Payment></Payment>
-      // }
       {
         path: "/dashboard/payment/:id",
         element: <EmployeePayment />,

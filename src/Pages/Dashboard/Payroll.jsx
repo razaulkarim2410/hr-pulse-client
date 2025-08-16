@@ -13,7 +13,7 @@ const Payroll = () => {
   const fetchPayrolls = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:5000/payroll"); // update base URL
+      const res = await axios.get("https://hr-pulse-server.vercel.app/payroll"); // update base URL
       setPayrolls(res.data);
     } catch (err) {
       console.error("Error fetching payrolls:", err);

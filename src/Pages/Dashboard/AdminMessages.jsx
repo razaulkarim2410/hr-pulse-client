@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet-async";
 const AdminMessages = () => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
-  const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  const API = import.meta.env.VITE_API_URL || "https://hr-pulse-server.vercel.app";
 
   useEffect(() => {
     const fetchMessages = async () => {

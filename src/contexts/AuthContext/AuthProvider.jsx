@@ -43,7 +43,7 @@ const AuthProvider = ({ children }) => {
     if (currentUser?.email) {
       try {
         // ✅ Get JWT Token and store it
-        const tokenRes = await axios.post("http://localhost:5000/jwt", {
+        const tokenRes = await axios.post("https://hr-pulse-server.vercel.app/jwt", {
           email: currentUser.email,
         });
 
@@ -51,7 +51,7 @@ const AuthProvider = ({ children }) => {
 
         // ✅ Get user info from DB
         const userInfoRes = await axios.get(
-          `http://localhost:5000/users/${currentUser.email}`
+          `https://hr-pulse-server.vercel.app/users/${currentUser.email}`
         );
 
         setUserInfo(userInfoRes.data);

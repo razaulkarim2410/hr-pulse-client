@@ -47,7 +47,7 @@ const Register = () => {
       setUser({ ...user, displayName: name, photoURL });
 
       // ✅ Save to MongoDB (backend)
-      await fetch('http://localhost:5000/users', {
+      await fetch('https://hr-pulse-server.vercel.app/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

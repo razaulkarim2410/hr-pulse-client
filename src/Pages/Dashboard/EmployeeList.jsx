@@ -13,14 +13,14 @@ const EmployeeList = () => {
   const { data: employees = [], isLoading } = useQuery({
     queryKey: ["employees"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/users");
+      const res = await axios.get("https://hr-pulse-server.vercel.app/users");
       return res.data;
     },
   });
 
   const verifyMutation = useMutation({
     mutationFn: async ({ id, isVerified }) => {
-      const res = await axios.patch(`http://localhost:5000/users/${id}/verify`, {
+      const res = await axios.patch(`https://hr-pulse-server.vercel.app/users/${id}/verify`, {
         isVerified,
       });
       return res.data;

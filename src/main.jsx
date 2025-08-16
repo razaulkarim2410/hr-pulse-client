@@ -10,7 +10,7 @@ import axios from "axios";
 import { HelmetProvider } from 'react-helmet-async';
 // ✅ Create a QueryClient instance
 const queryClient = new QueryClient();
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = "https://hr-pulse-server.vercel.app";
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

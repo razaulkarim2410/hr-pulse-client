@@ -23,7 +23,7 @@ const CheckoutForm = ({ payroll }) => {
     e.preventDefault();
     setProcessing(true);
 
-    const { data } = await axios.post("http://localhost:5000/create-payment-intent", {
+    const { data } = await axios.post("https://hr-pulse-server.vercel.app/create-payment-intent", {
       salary: payroll.salary,
     });
 
@@ -42,7 +42,7 @@ const CheckoutForm = ({ payroll }) => {
       setProcessing(false);
     } else if (result.paymentIntent.status === "succeeded") {
       // ✅ Mark payroll as paid in backend
-      await axios.patch(`http://localhost:5000/payroll/${payroll._id}/pay`);
+      await axios.patch(`https://hr-pulse-server.vercel.app/payroll/${payroll._id}/pay`);
 
       Swal.fire("Success", "Payment complete", "success");
       navigate("/dashboard/payroll");
@@ -72,7 +72,7 @@ const EmployeePayment = () => {
   const [payroll, setPayroll] = useState(null);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/payroll").then((res) => {
+    axios.get("https://hr-pulse-server.vercel.app/payroll").then((res) => {
       const found = res.data.find((p) => p._id === id);
       setPayroll(found);
     });

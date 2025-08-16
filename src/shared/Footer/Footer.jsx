@@ -21,11 +21,11 @@ const Footer = () => {
         </nav>
         <nav>
           <h6 className=" font-bold text-xl">Company & Legal</h6>
-          <a className="link link-hover">About us</a>
-          <a className="link link-hover">Contact</a>
-          <a className="link link-hover">Terms of use</a>
-          <Link to={'/privacyPolicy'} className="link link-hover">Privacy policy</Link>
-          <a className="link link-hover">Cookie policy</a>
+          <Link to={'/about'} className="link link-hover">About us</Link>
+          <Link to={'/contact'} className="link link-hover">Contact</Link>
+          <Link to={'/terms'} className="link link-hover">Terms of use</Link>
+          <Link to={'/privacy'} className="link link-hover">Privacy policy</Link>
+          <Link to={'/cookie'} className="link link-hover">Cookie policy</Link>
         </nav>
         <nav>
           <FindUs></FindUs>

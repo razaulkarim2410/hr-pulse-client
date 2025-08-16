@@ -17,7 +17,7 @@ const PaymentHistory = () => {
     enabled: !!email,
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/payment-history?email=${email}&page=${page}&limit=${limit}`
+        `https://hr-pulse-server.vercel.app/payment-history?email=${email}&page=${page}&limit=${limit}`
       );
       if (!res.ok) throw new Error("Failed to fetch payment history");
       return res.json();
