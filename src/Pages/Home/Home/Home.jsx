@@ -7,6 +7,7 @@ import AudienceSupportSection from '../../AudienceSupportSection/AudienceSupport
 import { Helmet } from 'react-helmet-async';
 import HowItWorks from '../HowItWorks/HowItWorks';
 import { SecurityCompliance } from './SecurityCompliance/SecurityCompliance';
+import PricingPlans from './Pricing/Pricing';
 
 const Home = () => {
   return (
@@ -20,6 +21,7 @@ const Home = () => {
       <TestimonialsSection></TestimonialsSection>
       <SecurityCompliance></SecurityCompliance>
       <StatsSection></StatsSection>
+      <PricingPlans></PricingPlans>
       <AudienceSupportSection></AudienceSupportSection>
     </div>
   );
