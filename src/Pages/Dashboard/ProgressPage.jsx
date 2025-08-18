@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
 
@@ -9,7 +9,17 @@ const ProgressPage = () => {
   const [selectedMonth, setSelectedMonth] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Fetch all employees for dropdown
+  // Apply dark mode based on system preference
+  useEffect(() => {
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    if (prefersDark) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, []);
+
+  // Fetch all employees
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
@@ -22,7 +32,7 @@ const ProgressPage = () => {
     fetchEmployees();
   }, []);
 
-  // Fetch filtered worksheet data
+  // Fetch worksheet data with filters
   useEffect(() => {
     const fetchWorks = async () => {
       if (!selectedMonth) return;
@@ -31,16 +41,19 @@ const ProgressPage = () => {
       try {
         let selectedEmail = "";
         if (selectedName) {
-          const found = employees.find(emp => emp.name === selectedName);
+          const found = employees.find((emp) => emp.name === selectedName);
           selectedEmail = found?.email || "";
         }
 
-        const res = await axios.get("https://hr-pulse-server.vercel.app/progress", {
-          params: {
-            email: selectedEmail,
-            month: selectedMonth,
-          },
-        });
+        const res = await axios.get(
+          "https://hr-pulse-server.vercel.app/progress",
+          {
+            params: {
+              email: selectedEmail,
+              month: selectedMonth,
+            },
+          }
+        );
 
         setWorks(res.data);
       } catch (err) {
@@ -53,17 +66,20 @@ const ProgressPage = () => {
     fetchWorks();
   }, [selectedName, selectedMonth, employees]);
 
-
   return (
-    <div className="w-11/12 mx-auto py-5">
+    <div className="w-11/12 mx-auto py-6 min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       <Helmet>
         <title>Dashboard | Progress Page</title>
       </Helmet>
-      <h2 className="text-3xl font-bold mb-6 text-center">Employee Work Progress</h2>
 
+      <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-6 text-center">
+        Employee Work Progress
+      </h2>
+
+      {/* Filters */}
       <div className="flex flex-wrap gap-4 mb-6 justify-center">
         <select
-          className="select select-bordered"
+          className="select select-bordered bg-white dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700"
           value={selectedName}
           onChange={(e) => setSelectedName(e.target.value)}
         >
@@ -76,25 +92,40 @@ const ProgressPage = () => {
         </select>
 
         <select
-          className="select select-bordered"
+          className="select select-bordered bg-white dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700"
           value={selectedMonth}
           onChange={(e) => setSelectedMonth(e.target.value)}
         >
           <option value="">Select Month</option>
-          {["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-            .map((m) => (
-              <option key={m} value={m}>{m}</option>
-            ))}
+          {[
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+          ].map((m) => (
+            <option key={m} value={m}>
+              {m}
+            </option>
+          ))}
         </select>
       </div>
 
+      {/* Table or Loading State */}
       {loading ? (
-        <p className="text-center">Loading...</p>
+        <p className="text-center text-gray-600 dark:text-gray-300">Loading...</p>
       ) : (
         <div className="overflow-x-auto">
           {works.length > 0 ? (
-            <table className="table table-zebra w-full">
-              <thead className="bg-purple-800 text-white">
+            <table className="table w-full bg-white dark:bg-gray-800 rounded-lg shadow-md">
+              <thead className="bg-purple-700 dark:bg-purple-800 text-white">
                 <tr>
                   <th>#</th>
                   <th>Employee</th>
@@ -105,7 +136,10 @@ const ProgressPage = () => {
               </thead>
               <tbody>
                 {works.map((task, i) => (
-                  <tr key={task._id}>
+                  <tr
+                    key={task._id}
+                    className="text-gray-700 dark:text-gray-300 border-b dark:border-gray-700"
+                  >
                     <td>{i + 1}</td>
                     <td>{task.name}</td>
                     <td>{task.date}</td>
@@ -116,7 +150,9 @@ const ProgressPage = () => {
               </tbody>
             </table>
           ) : (
-            <p className="text-center text-gray-500">No data found.</p>
+            <p className="text-center text-gray-500 dark:text-gray-400">
+              No data found.
+            </p>
           )}
         </div>
       )}

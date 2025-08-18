@@ -2,9 +2,9 @@ import React from 'react';
 
 const CookiePolicy = () => {
   return (
-    <section className="bg-white py-16 px-6 md:px-12 lg:px-24 text-gray-700">
+    <section className="bg-white dark:bg-neutral-900 py-16 px-6 md:px-12 lg:px-24 text-gray-700 dark:text-gray-300">
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8 text-gray-900">Cookie Policy</h1>
+        <h1 className="text-4xl font-bold mb-8 text-gray-900 dark:text-gray-100">Cookie Policy</h1>
 
         <p className="mb-6">
           This Cookie Policy explains how <strong>HRPulse</strong> uses cookies and similar technologies when you visit or interact with our website and services. By continuing to use our platform, you consent to the use of cookies in accordance with this policy.
@@ -50,7 +50,8 @@ const CookiePolicy = () => {
 
         <h2 className="text-2xl font-semibold mt-8 mb-2">7. Contact Us</h2>
         <p>
-          If you have any questions about our use of cookies, feel free to contact us at: <a href="mailto:support@hrpulse.com" className="text-blue-600 underline">support@hrpulse.com</a>
+          If you have any questions about our use of cookies, feel free to contact us at: 
+          <a href="mailto:support@hrpulse.com" className="text-blue-600 dark:text-blue-400 underline">support@hrpulse.com</a>
         </p>
       </div>
     </section>

@@ -46,17 +46,24 @@ const HRFeaturesSection = () => {
   ];
 
   return (
-    <section className="py-16 bg-gray-50 w-11/12 mx-auto">
+    <section className="py-16 bg-gray-50 dark:bg-neutral-900 w-11/12 mx-auto">
       <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-10 text-pink-700">Core Features of HRPulse</h2>
+        <h2 className="text-4xl font-bold text-center mb-10 text-pink-700 dark:text-pink-400">
+          Core Features of HRPulse
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, idx) => (
-            <div key={idx} className="bg-white p-6 rounded-xl shadow hover:shadow-md transition-all duration-300 text-center">
-              <div className="mb-4 flex justify-center">
-                {feature.icon}
-              </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">{feature.title}</h3>
-              <p className="text-gray-600 text-sm">{feature.description}</p>
+            <div
+              key={idx}
+              className="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow hover:shadow-md transition-all duration-300 text-center border border-gray-100 dark:border-neutral-700"
+            >
+              <div className="mb-4 flex justify-center">{feature.icon}</div>
+              <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">
+                {feature.title}
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 text-sm">
+                {feature.description}
+              </p>
             </div>
           ))}
         </div>

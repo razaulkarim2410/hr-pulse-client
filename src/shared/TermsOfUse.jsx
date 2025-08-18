@@ -2,9 +2,9 @@ import React from 'react';
 
 const TermsOfUse = () => {
   return (
-    <section className="bg-white py-16 px-6 md:px-12 lg:px-24 text-gray-700">
+    <section className="bg-white dark:bg-neutral-900 py-16 px-6 md:px-12 lg:px-24 text-gray-700 dark:text-gray-300">
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8 text-gray-900">Terms of Use</h1>
+        <h1 className="text-4xl font-bold mb-8 text-gray-900 dark:text-gray-100">Terms of Use</h1>
 
         <p className="mb-6">
           Welcome to <strong>HRPulse</strong>. By accessing or using our platform, services, and features, you agree to be bound by the following Terms of Use. Please read them carefully. If you do not agree with any part of these terms, you must not use HRPulse.
@@ -22,7 +22,7 @@ const TermsOfUse = () => {
 
         <h2 className="text-2xl font-semibold mt-8 mb-2">3. Privacy and Data</h2>
         <p className="mb-4">
-          Your use of HRPulse is also governed by our <a href="/privacy-policy" className="text-blue-600 underline">Privacy Policy</a>. We are committed to protecting your data and using it in compliance with applicable laws.
+          Your use of HRPulse is also governed by our <a href="/privacy-policy" className="text-blue-600 dark:text-blue-400 underline">Privacy Policy</a>. We are committed to protecting your data and using it in compliance with applicable laws.
         </p>
 
         <h2 className="text-2xl font-semibold mt-8 mb-2">4. Intellectual Property</h2>
@@ -47,7 +47,7 @@ const TermsOfUse = () => {
 
         <h2 className="text-2xl font-semibold mt-8 mb-2">8. Contact</h2>
         <p>
-          If you have any questions about these Terms of Use, please contact us at: <a href="mailto:support@hrpulse.com" className="text-blue-600 underline">support@hrpulse.com</a>.
+          If you have any questions about these Terms of Use, please contact us at: <a href="mailto:support@hrpulse.com" className="text-blue-600 dark:text-blue-400 underline">support@hrpulse.com</a>.
         </p>
       </div>
     </section>

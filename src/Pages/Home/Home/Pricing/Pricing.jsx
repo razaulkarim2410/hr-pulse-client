@@ -1,6 +1,7 @@
 // src/Pages/Home/PricingPlans.jsx
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -17,6 +18,7 @@ const tiers = [
       "Profile updates & leave requests",
       "Community support",
     ],
+    link: "/plans-starter",
   },
   {
     name: "Pro",
@@ -27,6 +29,7 @@ const tiers = [
       "HR approval workflow",
       "Email support",
     ],
+    link: "/plans-pro",
   },
   {
     name: "Enterprise",
@@ -37,12 +40,13 @@ const tiers = [
       "Priority support & SLA",
       "Custom integrations",
     ],
+    link: "/plans-enterprise",
   },
 ];
 
 const PricingPlans = () => {
   return (
-    <section className="py-16 md:py-20 bg-white dark:bg-neutral-900">
+    <section className="py-16 md:py-20 bg-white dark:bg-neutral-900 w-11/12 mx-auto">
       <div className="max-w-6xl mx-auto px-4 md:px-6 text-center">
         <motion.h2
           initial="hidden"
@@ -71,12 +75,18 @@ const PricingPlans = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1, duration: 0.5 }}
-              className="bg-gray-50 dark:bg-neutral-800 p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all cursor-pointer flex flex-col justify-between"
+              className="bg-gray-50 dark:bg-neutral-800 p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all flex flex-col justify-between"
             >
               <div>
-                <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">{tier.name}</h3>
-                <p className="text-3xl font-bold text-cyan-600 dark:text-cyan-400 mb-1">{tier.price}</p>
-                <p className="text-sm text-gray-500 dark:text-neutral-400 mb-6">{tier.users}</p>
+                <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">
+                  {tier.name}
+                </h3>
+                <p className="text-3xl font-bold text-cyan-600 dark:text-cyan-400 mb-1">
+                  {tier.price}
+                </p>
+                <p className="text-sm text-gray-500 dark:text-neutral-400 mb-6">
+                  {tier.users}
+                </p>
                 <ul className="space-y-2 text-sm text-gray-600 dark:text-neutral-300 mb-6">
                   {tier.features.map((f, i) => (
                     <li key={i} className="flex items-start gap-2">
@@ -86,9 +96,12 @@ const PricingPlans = () => {
                   ))}
                 </ul>
               </div>
-              <button className="mt-auto inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg bg-cyan-600 text-white hover:bg-cyan-700 transition">
-                Select Plan
-              </button>
+              <Link
+                to={tier.link}
+                className="mt-auto inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg bg-cyan-600 text-white hover:bg-cyan-700 transition"
+              >
+                View Details
+              </Link>
             </motion.div>
           ))}
         </div>

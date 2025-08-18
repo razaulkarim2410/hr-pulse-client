@@ -2,9 +2,9 @@ import React from 'react';
 
 const PrivacyPolicy = () => {
   return (
-    <section className="bg-white py-16 px-6 md:px-12 lg:px-24 text-gray-700">
+    <section className="bg-white dark:bg-neutral-900 py-16 px-6 md:px-12 lg:px-24 text-gray-700 dark:text-gray-300">
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8 text-gray-900">Privacy Policy</h1>
+        <h1 className="text-4xl font-bold mb-8 text-gray-900 dark:text-gray-100">Privacy Policy</h1>
 
         <p className="mb-6">
           At <strong>HRPulse</strong>, we value your privacy and are committed to protecting your personal information. This Privacy Policy outlines how we collect, use, and safeguard your data when you use our platform.
@@ -48,7 +48,7 @@ const PrivacyPolicy = () => {
 
         <h2 className="text-2xl font-semibold mt-8 mb-2">6. Your Rights</h2>
         <p className="mb-4">
-          You have the right to access, update, or delete your personal information. For requests, please email us at <a href="mailto:support@hrpulse.com" className="text-blue-600 underline">support@hrpulse.com</a>.
+          You have the right to access, update, or delete your personal information. For requests, please email us at <a href="mailto:support@hrpulse.com" className="text-blue-600 dark:text-blue-400 underline">support@hrpulse.com</a>.
         </p>
 
         <h2 className="text-2xl font-semibold mt-8 mb-2">7. Changes to This Policy</h2>
@@ -58,7 +58,7 @@ const PrivacyPolicy = () => {
 
         <h2 className="text-2xl font-semibold mt-8 mb-2">8. Contact Us</h2>
         <p>
-          If you have any questions or concerns about this Privacy Policy, contact us at: <a href="mailto:support@hrpulse.com" className="text-blue-600 underline">support@hrpulse.com</a>.
+          If you have any questions or concerns about this Privacy Policy, contact us at: <a href="mailto:support@hrpulse.com" className="text-blue-600 dark:text-blue-400 underline">support@hrpulse.com</a>.
         </p>
       </div>
     </section>

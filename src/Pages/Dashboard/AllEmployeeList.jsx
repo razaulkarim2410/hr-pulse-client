@@ -9,15 +9,18 @@ const AllEmployeeList = () => {
   const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState("table"); // 'table' or 'card'
 
+  // Auto-enable dark mode based on system preference
+  useEffect(() => {
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    if (prefersDark) document.documentElement.classList.add("dark");
+    else document.documentElement.classList.remove("dark");
+  }, []);
+
   const fetchEmployees = async () => {
     try {
       const res = await axios.get(`${API_BASE}/users/all`);
-      if (Array.isArray(res.data)) {
-        setEmployees(res.data);
-      } else {
-        console.error("Expected array, got:", res.data);
-        setEmployees([]);
-      }
+      if (Array.isArray(res.data)) setEmployees(res.data);
+      else setEmployees([]);
     } catch (err) {
       console.error("Fetch error:", err);
       setEmployees([]);
@@ -74,20 +77,23 @@ const AllEmployeeList = () => {
   };
 
   const handleVerify = async (id) => {
-    await axios.patch(`${API_BASE}/users/${id}/verify`, {
-      isVerified: true,
-    });
-
+    await axios.patch(`${API_BASE}/users/${id}/verify`, { isVerified: true });
     fetchEmployees();
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div className="text-center py-6 text-gray-700 dark:text-gray-200">
+        Loading...
+      </div>
+    );
 
   return (
-    <div className="p-4">
+    <div className="p-4 transition-colors duration-300 bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
       <Helmet>
         <title>Dashboard | All Employee</title>
       </Helmet>
+
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-3xl font-bold">All Employees</h2>
         <button
@@ -100,8 +106,8 @@ const AllEmployeeList = () => {
 
       {viewMode === "table" ? (
         <div className="overflow-x-auto">
-          <table className="table w-full">
-            <thead>
+          <table className="table w-full border">
+            <thead className="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200">
               <tr>
                 <th>Name</th>
                 <th>Designation</th>
@@ -114,7 +120,10 @@ const AllEmployeeList = () => {
             </thead>
             <tbody>
               {employees.map((user) => (
-                <tr key={user._id}>
+                <tr
+                  key={user._id}
+                  className="border hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
                   <td>{user.name}</td>
                   <td>{user.designation}</td>
                   <td>{user.role}</td>
@@ -170,12 +179,11 @@ const AllEmployeeList = () => {
           </table>
         </div>
       ) : (
-        // 🔁 Card View Grid
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {employees.map((user) => (
             <div
               key={user._id}
-              className="card bg-base-100 shadow-md border p-4 space-y-2"
+              className="card shadow-md border p-4 space-y-2 bg-base-100 dark:bg-gray-800 dark:text-gray-200"
             >
               <h3 className="text-lg font-bold">{user.name}</h3>
               <p>Designation: {user.designation}</p>

@@ -40,8 +40,8 @@ export const Integrations = () => {
   ];
 
   return (
-    <section className="py-16 md:py-20 bg-white dark:bg-neutral-900">
-      <div className="max-w-6xl mx-auto px-4 md:px-6 text-center">
+    <section className="py-16 md:py-20 bg-white dark:bg-neutral-900 ">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 text-center ">
         <motion.h2
           initial="hidden"
           whileInView="show"
@@ -92,7 +92,7 @@ export const SecurityCompliance = () => {
   ];
 
   return (
-    <section className="py-16 md:py-20 bg-gray-50 dark:bg-neutral-900">
+    <section className="py-16 md:py-20 bg-gray-50 dark:bg-neutral-900 w-11/12 mx-auto">
       <div className="max-w-6xl mx-auto px-4 md:px-6 text-center">
         <motion.h2
           initial="hidden"

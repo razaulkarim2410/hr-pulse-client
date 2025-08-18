@@ -1,63 +1,37 @@
-// StepCard.jsx (updated)
+// src/Pages/Home/HowItWorks/StepCard.jsx
 import React from "react";
-import { motion } from "framer-motion";
-import { useNavigate } from "react-router";
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-};
+import { Link } from "react-router";
 
 const StepCard = ({ icon: Icon, title, subtitle, bullets, link }) => {
-  const navigate = useNavigate();
-
   return (
-    <motion.div
-      variants={fadeUp}
-      whileHover={{ scale: 1.05 }}
-      className="relative group overflow-hidden rounded-2xl bg-white dark:bg-neutral-900 shadow-lg hover:shadow-2xl ring-1 ring-neutral-200 dark:ring-neutral-800 transition-all duration-300 cursor-pointer"
-      onClick={() => navigate(link)}
+    <Link
+      to={link}
+      className="flex-1 bg-white dark:bg-neutral-800 rounded-2xl shadow-lg dark:shadow-gray-700 hover:shadow-xl transition p-6 flex flex-col"
     >
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-cyan-50 to-indigo-50 dark:from-cyan-900/10 dark:to-indigo-900/10" />
-
-      <div className="p-6 md:p-8 flex flex-col h-full">
-        <motion.div
-          whileHover={{ rotate: 10 }}
-          className="flex items-center gap-3"
-        >
-          <div className="rounded-2xl p-3 bg-neutral-100 dark:bg-neutral-800 shadow-sm group-hover:shadow-md transition">
-            <Icon className="h-6 w-6 text-cyan-600 dark:text-cyan-400" />
-          </div>
-          <div>
-            <h3 className="text-lg md:text-xl font-semibold">{title}</h3>
-            {subtitle && (
-              <p className="text-sm text-neutral-500 dark:text-neutral-400">
-                {subtitle}
-              </p>
-            )}
-          </div>
-        </motion.div>
-
-        <ul className="mt-4 space-y-2 text-sm md:text-base flex-1">
-          {bullets.map((b, i) => (
-            <li key={i} className="flex items-start gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-cyan-600 dark:bg-cyan-400" />
-              <span>{b}</span>
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-6">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-cyan-600 text-white hover:bg-cyan-700 transition"
-          >
-            View More
-          </motion.button>
-        </div>
+      {/* Icon */}
+      <div className="bg-gradient-to-br from-cyan-500 to-blue-500 dark:from-cyan-400 dark:to-blue-600 w-14 h-14 flex items-center justify-center rounded-xl mb-4">
+        <Icon className="w-7 h-7 text-white" />
       </div>
-    </motion.div>
+
+      {/* Title */}
+      <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-1">{title}</h3>
+      <p className="text-gray-600 dark:text-neutral-300 mb-4">{subtitle}</p>
+
+      {/* Bullet points */}
+      <ul className="space-y-2 flex-1">
+        {bullets.map((b, i) => (
+          <li key={i} className="text-gray-600 dark:text-neutral-300 flex items-start gap-2">
+            <span className="mt-1.5 h-2 w-2 rounded-full bg-cyan-500 dark:bg-cyan-400" />
+            <span>{b}</span>
+          </li>
+        ))}
+      </ul>
+
+      {/* CTA */}
+      <div className="mt-4 text-right">
+        <span className="text-cyan-500 dark:text-cyan-400 font-medium hover:underline">Learn More →</span>
+      </div>
+    </Link>
   );
 };
 

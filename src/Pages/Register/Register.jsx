@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { FaEye } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../../contexts/AuthContext/AuthContext';
@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { Helmet } from 'react-helmet-async';
 
 const Register = () => {
-  const { createUser, updateUser, setUser } = React.useContext(AuthContext);
+  const { createUser, updateUser, setUser } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
@@ -19,7 +19,6 @@ const Register = () => {
     const role = form.role.value;
     const imageFile = form.photo.files[0];
 
-    // ✅ Password validation
     const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*]).{6,}$/;
     if (!passwordRegex.test(password)) {
       Swal.fire("Error", "Password must be ≥6 characters, 1 capital letter, 1 special char", "error");
@@ -27,7 +26,6 @@ const Register = () => {
     }
 
     try {
-      // ✅ Upload photo to imgbb
       const formData = new FormData();
       formData.append('image', imageFile);
 
@@ -39,14 +37,12 @@ const Register = () => {
       const imgData = await res.json();
       const photoURL = imgData.data.url;
 
-      // ✅ Create Firebase user
       const result = await createUser(email, password);
       await updateUser({ displayName: name, photoURL });
 
       const user = result.user;
       setUser({ ...user, displayName: name, photoURL });
 
-      // ✅ Save to MongoDB (backend)
       await fetch('https://hr-pulse-server.vercel.app/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -70,41 +66,74 @@ const Register = () => {
   };
 
   return (
-    <div className="card bg-base-100 w-full max-w-sm shadow-2xl mx-auto my-20">
+    <div className="card bg-white dark:bg-neutral-800 w-full max-w-sm shadow-2xl mx-auto my-20 border border-gray-200 dark:border-neutral-700">
       <Helmet>
         <title>Register</title>
       </Helmet>
-      <h2 className="text-4xl font-bold text-center py-4">Register Your Account</h2>
+
+      <h2 className="text-4xl font-bold text-center py-4 text-gray-800 dark:text-gray-100">Register Your Account</h2>
+
       <form onSubmit={handleRegister} className="card-body">
-        <label className="label">Name</label>
-        <input type="text" required name="name" className="input input-bordered" />
+        <label className="label text-gray-700 dark:text-gray-200">Name</label>
+        <input
+          type="text"
+          required
+          name="name"
+          className="input input-bordered bg-white dark:bg-neutral-700 text-gray-800 dark:text-gray-100 border-gray-300 dark:border-neutral-600"
+        />
 
-        <label className="label">Photo</label>
-        <input type="file" name="photo" accept="image/*" required className="file-input file-input-bordered" />
+        <label className="label text-gray-700 dark:text-gray-200">Photo</label>
+        <input
+          type="file"
+          name="photo"
+          accept="image/*"
+          required
+          className="file-input file-input-bordered bg-white dark:bg-neutral-700 text-gray-800 dark:text-gray-100 border-gray-300 dark:border-neutral-600"
+        />
 
-        <label className="label">Email</label>
-        <input type="email" required name="email" className="input input-bordered" />
+        <label className="label text-gray-700 dark:text-gray-200">Email</label>
+        <input
+          type="email"
+          required
+          name="email"
+          className="input input-bordered bg-white dark:bg-neutral-700 text-gray-800 dark:text-gray-100 border-gray-300 dark:border-neutral-600"
+        />
 
-        <label className="label">Password</label>
+        <label className="label text-gray-700 dark:text-gray-200">Password</label>
         <div className="relative">
           <input
             type={showPassword ? "text" : "password"}
             required
             name="password"
-            className="input input-bordered w-full"
+            className="input input-bordered w-full bg-white dark:bg-neutral-700 text-gray-800 dark:text-gray-100 border-gray-300 dark:border-neutral-600"
           />
-          <FaEye className="absolute top-3 right-3 cursor-pointer" onClick={() => setShowPassword(!showPassword)} />
+          <FaEye
+            className="absolute top-3 right-3 cursor-pointer text-gray-600 dark:text-gray-300"
+            onClick={() => setShowPassword(!showPassword)}
+          />
         </div>
 
-        <label className="label">Select Role</label>
-        <select name="role" required className="select select-bordered">
+        <label className="label text-gray-700 dark:text-gray-200">Select Role</label>
+        <select
+          name="role"
+          required
+          className="select select-bordered bg-white dark:bg-neutral-700 text-gray-800 dark:text-gray-100 border-gray-300 dark:border-neutral-600"
+        >
           <option value="">-- Select Role --</option>
           <option value="Employee">Employee</option>
           <option value="HR">HR</option>
         </select>
 
-        <button type="submit" className="btn  bg-pink-700 text-white hover:bg-white hover:text-pink-700 mt-4">Register</button>
-        <p className="text-sm pt-4">Already have an account? <Link to="/login" className="text-pink-700 underline">Login</Link></p>
+        <button
+          type="submit"
+          className="btn bg-pink-700 text-white hover:bg-white hover:text-pink-700 mt-4"
+        >
+          Register
+        </button>
+
+        <p className="text-sm pt-4 text-gray-700 dark:text-gray-300">
+          Already have an account? <Link to="/login" className="text-pink-700 dark:text-pink-400 underline">Login</Link>
+        </p>
       </form>
     </div>
   );

@@ -23,9 +23,12 @@ const CheckoutForm = ({ payroll }) => {
     e.preventDefault();
     setProcessing(true);
 
-    const { data } = await axios.post("https://hr-pulse-server.vercel.app/create-payment-intent", {
-      salary: payroll.salary,
-    });
+    const { data } = await axios.post(
+      "https://hr-pulse-server.vercel.app/create-payment-intent",
+      {
+        salary: payroll.salary,
+      }
+    );
 
     const result = await stripe.confirmCardPayment(data.clientSecret, {
       payment_method: {
@@ -41,8 +44,9 @@ const CheckoutForm = ({ payroll }) => {
       Swal.fire("Error", result.error.message, "error");
       setProcessing(false);
     } else if (result.paymentIntent.status === "succeeded") {
-      // ✅ Mark payroll as paid in backend
-      await axios.patch(`https://hr-pulse-server.vercel.app/payroll/${payroll._id}/pay`);
+      await axios.patch(
+        `https://hr-pulse-server.vercel.app/payroll/${payroll._id}/pay`
+      );
 
       Swal.fire("Success", "Payment complete", "success");
       navigate("/dashboard/payroll");
@@ -50,12 +54,16 @@ const CheckoutForm = ({ payroll }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-6 bg-white rounded shadow">
-      <Helmet>
-        <title>Dashboard | Employee Payment</title>
-      </Helmet>
-      <h2 className="text-xl font-semibold mb-4">Pay ৳{payroll.salary} to {payroll.name}</h2>
-      <CardElement className="border p-3 mb-4 rounded" />
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-md mx-auto p-6 rounded shadow-md transition-colors duration-300 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200"
+    >
+      <h2 className="text-xl font-semibold mb-4">
+        Pay ৳{payroll.salary} to {payroll.name}
+      </h2>
+      <div className="border p-3 mb-4 rounded border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700">
+        <CardElement />
+      </div>
       <button
         type="submit"
         disabled={!stripe || processing}
@@ -71,6 +79,16 @@ const EmployeePayment = () => {
   const { id } = useParams();
   const [payroll, setPayroll] = useState(null);
 
+  // Auto-enable dark mode based on system preference
+  useEffect(() => {
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    if (prefersDark) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, []);
+
   useEffect(() => {
     axios.get("https://hr-pulse-server.vercel.app/payroll").then((res) => {
       const found = res.data.find((p) => p._id === id);
@@ -78,12 +96,22 @@ const EmployeePayment = () => {
     });
   }, [id]);
 
-  if (!payroll) return <div>Loading payroll...</div>;
+  if (!payroll) return <div className="text-center py-6">Loading payroll...</div>;
 
   return (
-    <Elements stripe={stripePromise}>
-      <CheckoutForm payroll={payroll} />
-    </Elements>
+    <div className="min-h-screen p-4 transition-colors duration-300 bg-gray-50 dark:bg-gray-900">
+      <Helmet>
+        <title>Dashboard | Employee Payment</title>
+      </Helmet>
+
+      <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-6">
+        Employee Payment
+      </h2>
+
+      <Elements stripe={stripePromise}>
+        <CheckoutForm payroll={payroll} />
+      </Elements>
+    </div>
   );
 };
 

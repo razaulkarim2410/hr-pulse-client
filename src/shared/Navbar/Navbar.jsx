@@ -41,10 +41,14 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <div className="hidden lg:flex items-center gap-6">
           <NavLink to="/" className="text-sm font-semibold hover:text-pink-600">Home</NavLink>
-          <NavLink to="/contact-us" className="text-sm font-semibold hover:text-pink-600">Contact Us</NavLink>
+          <NavLink to="/about" className="text-sm font-semibold hover:text-pink-600">About Us</NavLink>
+          <NavLink to="/contact-us" className="text-sm font-semibold hover:text-pink-600">Contact</NavLink>
 
           {user && (
-            <NavLink to="/dashboard" className="text-sm font-semibold hover:text-pink-600">Dashboard</NavLink>
+            <>
+              <NavLink to="/dashboard" className="text-sm font-semibold hover:text-pink-600">Dashboard</NavLink>
+              <NavLink to="/profile" className="text-sm font-semibold hover:text-pink-600">Profile</NavLink>
+            </>
           )}
         </div>
 
@@ -87,10 +91,15 @@ const Navbar = () => {
       {menuOpen && (
         <div className="lg:hidden bg-gray-100 shadow-md py-3 px-4 space-y-2">
           <NavLink to="/" onClick={toggleMenu} className="block text-sm font-medium hover:text-pink-600">Home</NavLink>
-          <NavLink to="/contact-us" onClick={toggleMenu} className="block text-sm font-medium hover:text-pink-600">Contact Us</NavLink>
+          <NavLink to="/about" onClick={toggleMenu} className="block text-sm font-medium hover:text-pink-600">About Us</NavLink>
+          <NavLink to="/contact-us" onClick={toggleMenu} className="block text-sm font-medium hover:text-pink-600">Contact</NavLink>
 
           {user && (
-            <NavLink to="/dashboard" onClick={toggleMenu} className="block text-sm font-medium hover:text-pink-600">Dashboard</NavLink>
+            <>
+              <NavLink to="/dashboard" className="text-sm font-semibold hover:text-pink-600">Dashboard</NavLink>
+              <br />
+              <NavLink to="/profile" className="text-sm font-semibold hover:text-pink-600">Profile</NavLink>
+            </>
           )}
 
           {/* Role-based Links */}

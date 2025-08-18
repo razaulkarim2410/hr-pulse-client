@@ -32,6 +32,10 @@ import ErrorPage from "../shared/ErrorPage/ErrorPage";
 import CarouselOne from "../shared/CarouselOne/CarouselOne";
 import CarouselTwo from "../shared/CarouselTwo/CarouselTwo";
 import CarouselThree from "../shared/CarouselThree/CarouselThree";
+import Profile from "../shared/Navbar/Profile";
+import StarterDetails from "../Pages/Home/Home/Pricing/StarterDetails";
+import ProDetails from "../Pages/Home/Home/Pricing/ProDetails";
+import EnterpriseDetails from "../Pages/Home/Home/Pricing/EnterpriseDetails";
 
 
 export const router = createBrowserRouter([
@@ -102,6 +106,22 @@ export const router = createBrowserRouter([
       {
         path: "/carousel-three",
         element: <CarouselThree></CarouselThree>
+      },
+      {
+        path: "/profile",
+        element: <Profile></Profile>
+      },
+      {
+        path: "/plans-starter",
+        element: <StarterDetails></StarterDetails>
+      },
+      {
+        path: "/plans-pro",
+        element: <ProDetails></ProDetails>
+      },
+      {
+        path: "/plans-enterprise",
+        element: <EnterpriseDetails></EnterpriseDetails>
       }
       
     ]
